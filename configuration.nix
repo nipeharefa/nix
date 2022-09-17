@@ -11,6 +11,8 @@
       "https://dns.google/dns-query"
       "-u"
       "quic://dns.adguard-dns.com"
+      "-u"
+      "https://cloudflare-dns.com/dns-query"
       # PureDNS
       "-u"
       "172.64.36.2"
