@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
     pname = "brave";
-    version = "1.38.115";
+    version = "143.93";
 
     nativeBuildInputs = [ undmg ];
     src = fetchurl {
-        url = "https://updates-cdn.bravesoftware.com/sparkle/Brave-Browser/stable/142.97/Brave-Browser-x64.dmg";
+        url = "https://updates-cdn.bravesoftware.com/sparkle/Brave-Browser/stable/${version}/Brave-Browser-x64.dmg";
         sha256 = "sha256-/H6ECfJLW+xM6/j9Ybv1cGm1rPXqppwNsxALgLJqGPw=";
     };
 
@@ -16,7 +16,6 @@ stdenv.mkDerivation rec {
     installPhase = ''
         runHook preInstall
         mkdir -p $out/Applications
-        ls -lah
         cp -r "${desktopName}.app" $out/Applications
     '';
 }
