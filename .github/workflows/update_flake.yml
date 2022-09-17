@@ -1,0 +1,31 @@
+name: Update Flake inputs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'
+
+jobs:
+  update-nixpkgs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v17
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@v14
+        id: update_flakes
+        with:
+          pr-title: "Update flake.lock"
+          pr-labels: dependencies
+
+
+# ref: https://github.com/anthonyroussel/nixos-config/blob/main/.github/workflows/update-flake-inputs.yml
