@@ -13,7 +13,9 @@
             cl = "clear";
             reload = "source ~/.zshrc";
             flush="sudo killall -HUP mDNSResponder; sudo killall mDNSResponderHelper; sudo dscacheutil -flushcache";
-            #  psc0 = "nix build ${nixConfigDirectory}#darwinConfigurations.RG.system --json | jq -r '.[].outputs | to_entries[].value' | cachix push r17";
+            delete-gone-branch=''
+              git branch --v | grep "\[gone\]" | awk '{print $1}' | xargs git branch -D
+            '';
         };
 		enableAutosuggestions = true;
         oh-my-zsh = {
