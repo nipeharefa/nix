@@ -68,7 +68,10 @@ let
     # Golang tools
     golangci-lint
     go-mockery
+    
+    # browser
     edge
+    # brave
 
 
     ################################## 
