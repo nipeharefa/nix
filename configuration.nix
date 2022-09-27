@@ -8,10 +8,10 @@
     serviceConfig.ProgramArguments = [
       "${pkgs.dnsproxy}/bin/dnsproxy"
       "-u"
-      "https://dns.google/dns-query"
-      "-u"
       "quic://dns.adguard-dns.com"
       # PureDNS
+      "-u"
+      "https://puredns.org/dns-query"
       "-u"
       "172.64.36.2"
       # End of PureDNS
@@ -19,6 +19,7 @@
       "172.64.36.2"
       "--cache-min-ttl=600"
       "--fastest-addr"
+      "--http3"
     ];
   };
   # launchd.agents.dnsproxy = {
