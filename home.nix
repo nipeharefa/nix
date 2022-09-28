@@ -25,6 +25,7 @@ let
 
     # container
     podman
+    podman-compose
     qemu
 
     neovim
