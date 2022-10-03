@@ -18,5 +18,6 @@
     ];
     onActivation.cleanup = "zap";
     onActivation.upgrade = true;
+    autoUpdate = true;
   };
 }
