@@ -8,8 +8,6 @@
     serviceConfig.ProgramArguments = [
       "${pkgs.dnsproxy}/bin/dnsproxy"
       "-u"
-      "https://dns.google/dns-query"
-      "-u"
       "quic://dns.adguard-dns.com"
       "-u"
       "https://cloudflare-dns.com/dns-query"
@@ -19,6 +17,7 @@
       # End of PureDNS
       "-b"
       "172.64.36.2"
+      "--cache"
       "--cache-min-ttl=600"
       "--fastest-addr"
     ];
