@@ -60,6 +60,8 @@ let
     hugo
     dnsproxy
 
+    
+
     # Compilers
     # rustc
     go_1_19
@@ -91,6 +93,7 @@ let
     nix-prefetch-git
     yarn2nix
     nixpkgs-fmt
+    rnix-hashes
   ];
 
   gitPkgs = with pkgs.gitAndTools; [

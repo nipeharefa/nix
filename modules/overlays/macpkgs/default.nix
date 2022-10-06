@@ -13,6 +13,7 @@ let
     "edge"
     "telegram"
     "air"
+    "iterm2"
   ];
 in
 attrsets.genAttrs packages (name: pkgs.callPackage ./${name}.nix { })
