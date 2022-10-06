@@ -1,4 +1,4 @@
-{ inputs, pkgs, system, ... }:
+{ inputs, pkgs, lib, system, ... }:
 
 let
 
@@ -111,4 +111,15 @@ in {
   programs.tmux.enable = true;
   programs.tmux.terminal = "screen-256color";
   home.packages = defaultPackages ++ gitPkgs ++ gcloud;
+  home.file = {
+      "Applications/test/home-manager".source =
+      let apps = pkgs.buildEnv
+      {
+          name = "home-manager-apps";
+          paths = with pkgs; [ alacritty vscode postman brave ] ;
+          pathsToLink = "/Applications";
+      };
+      in
+      lib.mkIf pkgs.stdenv.targetPlatform.isDarwin "${apps}/Applications";
+  };
 }
