@@ -16,7 +16,7 @@
       "172.64.36.2"
       # End of PureDNS
       "-b"
-      "172.64.36.2"
+      "8.8.8.8"
       "--cache"
       "--cache-min-ttl=600"
       "--fastest-addr"
@@ -76,5 +76,13 @@
     dnsproxy
     dnscrypt-proxy2
     # terminal-notifier
+  ];
+
+# font
+  # fonts.fontDir.enable = true;
+  fonts.enableFontDir = true;
+  fonts.fonts = with pkgs; [
+    recursive
+    (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" ]; })
   ];
 }

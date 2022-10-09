@@ -3,8 +3,7 @@
 	homebrew = {
     enable = true;
     casks = [
-      "dbeaver-community" "brave-browser"
-      "microsoft-edge" "gather" "pritunl"
+      "dbeaver-community" "gather" "pritunl"
       "google-chrome" "spotify" "visual-studio-code" "steam" "telegram"
       "microsoft-edge" "discord" "slack"
     ];
