@@ -73,7 +73,7 @@ let
     
     # browser
     edge
-    # brave
+    brave
 
 
     ################################## 

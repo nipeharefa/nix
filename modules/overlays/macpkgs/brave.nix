@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
     nativeBuildInputs = [ undmg ];
     src = fetchurl {
         url = "https://updates-cdn.bravesoftware.com/sparkle/Brave-Browser/stable/${version}/Brave-Browser-x64.dmg";
-        sha256 = "sha256-/H6ECfJLW+xM6/j9Ybv1cGm1rPXqppwNsxALgLJqGPw=";
+        sha256 = "sha256-c+fGlBpyhKlo2EoiIda9u1zWjm1BzD90kP39Mc8B2A8=";
     };
 
     sourceRoot = ".";
@@ -17,5 +17,6 @@ stdenv.mkDerivation rec {
         runHook preInstall
         mkdir -p $out/Applications
         cp -r "${desktopName}.app" $out/Applications
+        runHook postInstall
     '';
 }
