@@ -16,8 +16,8 @@
     taps = [
       "nrlquaker/createzap"
     ];
-    onActivation.cleanup = "zap";
+    # onActivation.cleanup = "zap";
     onActivation.upgrade = true;
-    autoUpdate = true;
+    onActivation.autoUpdate = true;
   };
 }
