@@ -16,7 +16,9 @@
       "172.64.36.2"
       # End of PureDNS
       "-b"
-      "8.8.8.8"
+      "8.8.8.8:53"
+      "-b"
+      "9.9.9.9:53"
       "--cache"
       "--cache-min-ttl=600"
       "--fastest-addr"
