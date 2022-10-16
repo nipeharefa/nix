@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
     pname = "brave";
-    version = "144.108";
+    version = "144.112";
 
     nativeBuildInputs = [ undmg ];
     src = fetchurl {
