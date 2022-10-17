@@ -95,6 +95,8 @@ let
     rnix-hashes
 
     terraform
+
+    vscode
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
