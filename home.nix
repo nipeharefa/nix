@@ -35,8 +35,7 @@ let
     zsh
     kubectl
     air
-    python39Full
-    python39Packages.pipx
+    python39
     yq
     jq
 
