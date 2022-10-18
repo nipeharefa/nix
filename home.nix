@@ -59,8 +59,6 @@ let
     hugo
     dnsproxy
 
-    
-
     # Compilers
     # rustc
     go_1_19
@@ -109,7 +107,7 @@ in {
   programs.tmux.enable = true;
   programs.tmux.terminal = "screen-256color";
   home.packages = defaultPackages ++ gitPkgs ++ gcloud;
-
+  
   home.file = {
     "Applications/test/home-manager".source =
     let apps = pkgs.buildEnv
