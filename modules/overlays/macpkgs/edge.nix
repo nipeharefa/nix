@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
         cd MicrosoftEdge-${version}.pkg
         gunzip -dc Payload | cpio -i
         mkdir -p $out/Applications
-        cp -r 'Microsoft Edge.app' $out/Applications
+        cp -r 'Microsoft edge.app' $out/Applications
         runHook postInstall
     '';
 }
