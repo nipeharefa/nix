@@ -53,7 +53,6 @@ let
     envsubst
     hey
     cloudflared
-    iterm2
 
     direnv
     hugo
@@ -113,7 +112,7 @@ in {
     let apps = pkgs.buildEnv
     {
         name = "home-manager-apps";
-        paths = with pkgs; [ alacritty vscode brave ];
+        paths = with pkgs; [ alacritty vscode brave iterm2 ];
         pathsToLink = "/Applications";
     };
     in
