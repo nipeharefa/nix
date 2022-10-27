@@ -161,10 +161,6 @@
       gowi-tmux = import ./tmux.nix;
       zsh-extra = import ./zsh.nix;
       gowi-git = import ./git.nix;
-      gowi-shells = import ./shells.nix;
-      ac = import ./application.nix;
-      # r17-devshell = import ./devShell.nix;
-      # gowi-homebrew = import ./homebrew.nix;
 
       home-user-info = { lib, ... }: {
           options.home.user-info =
