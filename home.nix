@@ -35,8 +35,7 @@ let
     zsh
     kubectl
     air
-    python39Full
-    python39Packages.pipx
+    python39
     yq
     jq
 
@@ -54,13 +53,10 @@ let
     envsubst
     hey
     cloudflared
-    iterm2
 
     direnv
     hugo
     dnsproxy
-
-    
 
     # Compilers
     # rustc
@@ -110,13 +106,13 @@ in {
   programs.tmux.enable = true;
   programs.tmux.terminal = "screen-256color";
   home.packages = defaultPackages ++ gitPkgs ++ gcloud;
-
+  
   home.file = {
-    "Applications/test/home-manager".source =
+    "Applications/home-manager".source =
     let apps = pkgs.buildEnv
     {
         name = "home-manager-apps";
-        paths = with pkgs; [ alacritty vscode postman brave ] ;
+        paths = with pkgs; [ alacritty vscode brave iterm2 ];
         pathsToLink = "/Applications";
     };
     in

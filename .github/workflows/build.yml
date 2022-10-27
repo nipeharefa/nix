@@ -32,6 +32,7 @@ jobs:
           nix build .#darwinConfigurations.cicd.system
           # Build and switch to full config
           #/run/current-system/sw/bin/fish -c 'darwin-rebuild switch --flake .#githubCI'
+          # /run/current-system/sw/bin/darwin-rebuild switch --flake ".#cicd"
       
       # - name: Update flake.lock
       #   uses: DeterminateSystems/update-flake-lock@v13

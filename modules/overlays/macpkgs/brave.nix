@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
     pname = "brave";
-    version = "144.112";
+    version = "v1.45.113";
 
     nativeBuildInputs = [ undmg ];
     src = fetchurl {
-        url = "https://updates-cdn.bravesoftware.com/sparkle/Brave-Browser/stable/${version}/Brave-Browser-x64.dmg";
-        sha256 = "sha256-d0hblfU10EV+BYUj4GXHi1tben3b784UDKcyHIO+2Gc=";
+        url = "https://github.com/brave/brave-browser/releases/download/${version}/Brave-Browser-universal.dmg";
+        sha256 = "sha256-Df/TgfwWPS+eLWRQzRT74tJSY9V5FYiQe2cvK5UZhXw=";
     };
 
     sourceRoot = ".";
