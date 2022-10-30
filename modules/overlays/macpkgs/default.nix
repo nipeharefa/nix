@@ -14,6 +14,7 @@ let
     "telegram"
     "air"
     "iterm2"
+    "krakend"
   ];
 in
 attrsets.genAttrs packages (name: pkgs.callPackage ./${name}.nix { })
