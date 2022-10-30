@@ -93,6 +93,7 @@ let
     terraform
 
     vscode
+    krakend
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
