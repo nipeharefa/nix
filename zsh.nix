@@ -2,21 +2,21 @@
 
 {
 	programs.zsh = {
-        enable = true;
-        shellAliases = {
-            ls = "exa";
-            ll = "ls -l";
-            tx = "tmuxinator";
-            nixgc="nix-collect-garbage -d";
-            ip = "curl ifconfig.co";
-            ip6="curl -6 ifconfig.co";
-            cl = "clear";
-            reload = "source ~/.zshrc";
-            flush="sudo killall -HUP mDNSResponder; sudo killall mDNSResponderHelper; sudo dscacheutil -flushcache";
-            delete-gone-branch=''
-              git branch --v | grep "\[gone\]" | awk '{print $1}' | xargs git branch -D
-            '';
-        };
+    enable = true;
+    shellAliases = {
+        ls = "exa";
+        ll = "ls -l";
+        tx = "tmuxinator";
+        nixgc="nix-collect-garbage -d";
+        ip = "curl ifconfig.co";
+        ip6="curl -6 ifconfig.co";
+        cl = "clear";
+        reload = "source ~/.zshrc";
+        flush="sudo killall -HUP mDNSResponder; sudo killall mDNSResponderHelper; sudo dscacheutil -flushcache";
+        delete-gone-branch=''
+          git branch --v | grep "\[gone\]" | awk '{print $1}' | xargs git branch -D
+        '';
+    };
 		enableAutosuggestions = true;
         oh-my-zsh = {
             enable = true;
