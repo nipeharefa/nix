@@ -25,6 +25,12 @@
     ];
   };
 
+  environment.shells = with pkgs; [
+    bashInteractive
+    fish
+    zsh
+  ];
+
   nix = {
     configureBuildUsers = true;
     useDaemon = true;

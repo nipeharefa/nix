@@ -19,9 +19,7 @@ let
     lcov
     nodejs-16_x
     yarn
-    du-dust
 
-    sops
 
     # container
     podman
@@ -33,7 +31,6 @@ let
     hasura-cli
     exa
     zsh
-    kubectl
     air
     python39
     yq
@@ -94,6 +91,10 @@ let
 
     vscode
     krakend
+
+
+    kubectl
+    kubectx
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
