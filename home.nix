@@ -10,9 +10,12 @@ let
   legacyPackages = inputs.nixpkgs-unstable.legacyPackages.${system};
 
   gcloud = with legacyPackages; [
-    (legacyPackages.google-cloud-sdk.withExtraComponents ([legacyPackages.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
+    (legacyPackages.google-cloud-sdk.withExtraComponents ([
+      legacyPackages.google-cloud-sdk.components.gke-gcloud-auth-plugin
+      legacyPackages.google-cloud-sdk.components.kubectl
+      ]))
   ];
-
+  
   defaultPackages = with pkgs; [
     flyctl
     fish
