@@ -12,7 +12,7 @@ let
   gcloud = with legacyPackages; [
     (legacyPackages.google-cloud-sdk.withExtraComponents ([
       legacyPackages.google-cloud-sdk.components.gke-gcloud-auth-plugin
-      legacyPackages.google-cloud-sdk.components.kubectl
+      # legacyPackages.google-cloud-sdk.components.kubectl
       ]))
   ];
   

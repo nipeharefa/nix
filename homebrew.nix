@@ -5,7 +5,7 @@
     casks = [
       "dbeaver-community" "gather" "pritunl"
       "google-chrome" "spotify" "visual-studio-code" "steam" "telegram"
-      "microsoft-edge" "discord" "slack"
+      "microsoft-edge" "discord" "slack" "zulu" "android-studio"
     ];
 
     brews = [
@@ -14,6 +14,7 @@
     # cleanup = "zap";
     taps = [
       "nrlquaker/createzap"
+      "homebrew/cask"
     ];
     onActivation.cleanup = "uninstall";
     onActivation.upgrade = true;
