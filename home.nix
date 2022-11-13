@@ -39,8 +39,6 @@ let
     yq
     jq
 
-    postman
-
     redis
 
     awscli2
@@ -66,10 +64,6 @@ let
     # Golang tools
     golangci-lint
     go-mockery
-    
-    # browser
-    brave
-
 
     ################################## 
     # Communication
@@ -92,12 +86,14 @@ let
 
     terraform
 
-    vscode
     krakend
 
 
     kubectl
     kubectx
+
+    # mac
+    cocoapods
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
@@ -117,7 +113,7 @@ in {
     let apps = pkgs.buildEnv
     {
         name = "home-manager-apps";
-        paths = with pkgs; [ alacritty vscode brave iterm2 ];
+        paths = with pkgs; [ alacritty vscode brave iterm2 postman ];
         pathsToLink = "/Applications";
     };
     in
