@@ -87,6 +87,7 @@ let
     terraform
 
     krakend
+    vscode
 
 
     kubectl
