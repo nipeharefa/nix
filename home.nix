@@ -114,7 +114,7 @@ in {
     let apps = pkgs.buildEnv
     {
         name = "home-manager-apps";
-        paths = with pkgs; [ alacritty vscode brave iterm2 postman ];
+        paths = with pkgs; [ alacritty vscode postman ];
         pathsToLink = "/Applications";
     };
     in
