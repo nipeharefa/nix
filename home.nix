@@ -27,6 +27,7 @@ let
     # container
     podman
     qemu
+    docker
 
     neovim
     vim

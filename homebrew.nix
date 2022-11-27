@@ -3,9 +3,19 @@
 	homebrew = {
     enable = true;
     casks = [
-      "dbeaver-community" "gather" "pritunl"
-      "google-chrome" "spotify" "visual-studio-code" "steam" "telegram"
-      "microsoft-edge" "discord" "slack" "zulu" "android-studio"
+      "dbeaver-community"
+      "gather"
+      "pritunl"
+      "google-chrome"
+      "spotify"
+      "visual-studio-code"
+      "steam"
+      "telegram"
+      "microsoft-edge"
+      "discord"
+      "slack"
+      "zulu"
+      "android-studio"
       "tailscale"
       "brave-browser"
       "iterm2"
@@ -14,6 +24,7 @@
     brews = [
       "mitmproxy"
       "wireguard-tools"
+      "libpq"
     ];
     # cleanup = "zap";
     taps = [
