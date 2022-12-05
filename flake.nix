@@ -12,13 +12,9 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    home-manager.inputs.utils.follows = "flake-utils";
-
-    # Other sources
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
   let
     system = "x86_64-darwin";
     inherit (darwin.lib) darwinSystem;
