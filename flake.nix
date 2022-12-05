@@ -6,25 +6,19 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
-    
-    flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
 
     # Environment/system management
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    home-manager.inputs.flake-compat.follows = "flake-compat";
     home-manager.inputs.utils.follows = "flake-utils";
 
     # Other sources
     flake-utils.url = "github:numtide/flake-utils";
-
-    sops-nix.url = github:Mic92/sops-nix;
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
   let
     system = "x86_64-darwin";
     inherit (darwin.lib) darwinSystem;
@@ -35,13 +29,12 @@
     nixpkgsConfig = {
       config = { allowUnfree = true; };
       overlays = attrValues self.overlays ++ singleton (
-          # Sub in x86 version of packages that don't build on Apple Silicon yet
-          final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-            inherit (final.pkgs-x86)
-              yadm
-              niv;
-          })
-        );
+        final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+          inherit (final.pkgs-x86)
+            yadm
+            niv;
+        })
+      );
     };
 
     homeManagerStateVersion = "22.11";
@@ -51,6 +44,7 @@
       email = "nipeharefa@gmail.com";
       nixConfigDirectory = "/Users/nipeharefa/.config/nixpkgs";
     };
+
     ci = {
       username = "ci";
       fullName = "ci";
@@ -60,7 +54,6 @@
     nixDarwinCommonModules = attrValues self.commonModules ++ attrValues self.darwinModules ++ [
       ./configuration.nix
       # ./homebrew.nix
-      sops-nix.nixosModules.sops
       home-manager.darwinModules.home-manager
         (
           { config, lib, pkgs, ... }:
@@ -79,7 +72,6 @@
             home-manager.users.nipeharefa = {
               imports = attrValues self.homeManagerModules;
               home.stateVersion = homeManagerStateVersion;
-              # home.user-info = config.users.primaryUser;
             };
             home-manager.useGlobalPkgs = true;
             home-manager.extraSpecialArgs = { inherit inputs system; };
@@ -89,9 +81,12 @@
           }
         )
     ];
+    forAllSystems = nixpkgs.lib.genAttrs 
+    [
+        "aarch64-darwin"
+        "x86_64-darwin"
+    ];
   in {
-    # devShell.x86_64-darwin = {};
-    # start darwin
     darwinConfigurations = rec {
       bootstrap-x86 = makeOverridable darwinSystem {
         system = "x86_64-darwin";
@@ -102,8 +97,7 @@
 
       bootstrap-arm = bootstrap-x86.override { system = "aarch64-darwin"; };
 
-      gowi = makeOverridable darwinSystem {
-        system = "x86_64-darwin";
+      gowi = bootstrap-x86.override {
         modules = nixDarwinCommonModules ++ [
           ./homebrew.nix
           {
@@ -117,6 +111,7 @@
       m1pro = makeOverridable darwinSystem {
         system = "aarch64-darwin";
         modules = nixDarwinCommonModules ++ [
+          ./homebrew.nix
           {
             users.primaryUser = ci;
             networking.computerName = "gowi.m1pro";
@@ -135,23 +130,25 @@
           }
         ];
       };
-      cicdm1 = makeOverridable darwinSystem {
-        system = "aarch64-darwin";
-        modules = nixDarwinCommonModules ++ [
-          {
-            users.primaryUser = ci;
-            networking.computerName = "gowi.cicd";
-            networking.hostName = "gowi.cicd";
-          }
-        ];
-      };
     };
     # end of darwin config
     overlays = import ./modules/overlays inputs nixpkgsConfig;
 
-    commonModules = {
-        users-primaryUser = import ./modules/user.nix;
+    devShells = {
+      default = pkgs.mkShell {
+        name = "Your Project";
+        buildInputs = with pkgs; [
+          terragrunt
+          buf
+          swagger-codegen3
+          toxiproxy
+        ];
       };
+    };
+
+    commonModules = {
+      users-primaryUser = import ./modules/user.nix;
+    };
 
     darwinModules = {};
     # `home-manager` modules
@@ -167,18 +164,5 @@
             (self.commonModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
         };
     };
-  }  // flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in
-        {
-          devShells = {
-            default = pkgs.mkShellNoCC {
-              name = "PHP project";
-              buildInputs = [
-                pkgs.sops
-              ];
-            };
-          };
-        }
-    );
+  };
 }

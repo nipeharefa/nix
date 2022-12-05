@@ -19,6 +19,7 @@
       "tailscale"
       "brave-browser"
       "iterm2"
+      "postman"
     ];
 
     brews = [
