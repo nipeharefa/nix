@@ -12,7 +12,6 @@ let
     "brave"
     "edge"
     "telegram"
-    "air"
     "iterm2"
     "krakend"
   ];
