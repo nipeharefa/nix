@@ -93,6 +93,7 @@ let
 
     kubectl
     kubectx
+    viddy
 
     # mac
     cocoapods
