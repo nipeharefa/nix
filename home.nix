@@ -7,7 +7,7 @@ let
     yubioath-desktop # yubikey OTP manager (gui)
   ];
 
-  legacyPackages = inputs.nixpkgs-unstable.legacyPackages.${system};
+  legacyPackages = pkgs;
 
   gcloud = with legacyPackages; [
     (legacyPackages.google-cloud-sdk.withExtraComponents ([
@@ -81,15 +81,13 @@ let
     rnix-lsp
     home-manager
     nix-prefetch-git
-    yarn2nix
+    # yarn2nix
     nixpkgs-fmt
     rnix-hashes
 
     terraform
 
-    krakend
-    vscode
-
+    # krakend
 
     kubectl
     kubectx
@@ -102,7 +100,7 @@ let
   gitPkgs = with pkgs.gitAndTools; [
     diff-so-fancy # git diff with colors
     git-crypt     # git files encryption
-    hub           # github command-line client
+    # hub           # github command-line client
     tig           # diff and commit view
   ];
 in {
@@ -116,7 +114,7 @@ in {
     let apps = pkgs.buildEnv
     {
         name = "home-manager-apps";
-        paths = with pkgs; [ alacritty vscode ];
+        paths = with pkgs; [ alacritty ];
         pathsToLink = "/Applications";
     };
     in
