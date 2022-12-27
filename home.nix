@@ -96,6 +96,10 @@ let
 
     # mac
     cocoapods
+
+    # Swagger
+    swagger-codegen3
+    graphviz
   ];
 
   gitPkgs = with pkgs.gitAndTools; [

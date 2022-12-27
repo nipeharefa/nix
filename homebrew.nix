@@ -20,6 +20,7 @@
       "brave-browser"
       "iterm2"
       "postman"
+      "cloudflare-warp"
     ];
 
     brews = [

@@ -16,6 +16,7 @@ in {
     sessionPath = [
       "$HOME/.yarn/bin"
       "$HOME/.npm-packages/bin"
+      "$HOME/.npm-global/bin"
       "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
     ];
   };

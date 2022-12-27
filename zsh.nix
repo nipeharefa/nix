@@ -49,6 +49,7 @@
             zstyle ':completion:*:git-checkout:*' sort false
 
             eval "$(direnv hook zsh)"
+            npm config set prefix '~/.npm-global'
         '';
 	};
     
