@@ -17,6 +17,7 @@ in {
       "$HOME/.yarn/bin"
       "$HOME/.npm-packages/bin"
       "$HOME/.npm-global/bin"
+      "/opt/homebrew/bin"
       "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
     ];
   };
