@@ -19,6 +19,7 @@ in {
       "$HOME/.npm-global/bin"
       "/opt/homebrew/bin"
       "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+      "$HOME/go/bin"
     ];
   };
 }

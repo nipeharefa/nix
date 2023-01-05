@@ -21,12 +21,14 @@
       "iterm2"
       "postman"
       "cloudflare-warp"
+      "katalon-studio"
     ];
 
     brews = [
       "mitmproxy"
       "wireguard-tools"
       "libpq"
+      "helm"
     ];
     # cleanup = "zap";
     taps = [
