@@ -12,7 +12,6 @@ let
   gcloud = with legacyPackages; [
     (legacyPackages.google-cloud-sdk.withExtraComponents ([
       legacyPackages.google-cloud-sdk.components.gke-gcloud-auth-plugin
-      # legacyPackages.google-cloud-sdk.components.kubectl
       ]))
   ];
   
@@ -36,7 +35,7 @@ let
     exa
     zsh
     air
-    python39
+    python310
     yq
     jq
 
@@ -100,6 +99,7 @@ let
     # Swagger
     swagger-codegen3
     graphviz
+    openapi-generator-cli
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
