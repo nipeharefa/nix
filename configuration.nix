@@ -1,30 +1,5 @@
 { pkgs, lib, ... }:
 {
-
-  launchd.agents.dnsproxy = {
-    serviceConfig.RunAtLoad = true;
-    serviceConfig.StandardOutPath = "/tmp/launchd-dnscrypt.log";
-    serviceConfig.StandardErrorPath = "/tmp/launchd-dnscrypt.error";
-    serviceConfig.ProgramArguments = [
-      "${pkgs.dnsproxy}/bin/dnsproxy"
-      "-u"
-      "quic://dns.adguard-dns.com"
-      "-u"
-      "https://cloudflare-dns.com/dns-query"
-      # PureDNS
-      "-u"
-      "172.64.36.2"
-      # End of PureDNS
-      "-b"
-      "8.8.8.8:53"
-      "-b"
-      "9.9.9.9:53"
-      "--cache"
-      "--cache-min-ttl=600"
-      "--fastest-addr"
-    ];
-  };
-
   environment.shells = with pkgs; [
     bashInteractive
     fish

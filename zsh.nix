@@ -8,7 +8,7 @@
         ll = "ls -l";
         tx = "tmuxinator";
         nixgc="nix-collect-garbage -d";
-        ip = "curl ifconfig.co";
+        myip = "curl ifconfig.co";
         ip6="curl -6 ifconfig.co";
         cl = "clear";
         reload = "source ~/.zshrc";
