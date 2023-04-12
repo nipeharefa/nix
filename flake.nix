@@ -37,7 +37,7 @@
     primaryUserInfo = {
       username = "nipeharefa";
       fullName = "Nipe Harefa";
-      email = "nipeharefa@gmail.com";
+      email = "me@nipeharefa.dev";
       nixConfigDirectory = "/Users/nipeharefa/.config/nixpkgs";
     };
 
