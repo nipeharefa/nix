@@ -19,7 +19,7 @@ let
     flyctl
     fish
     lcov
-    nodejs-16_x
+    nodejs-19_x
     yarn
 
 
@@ -58,7 +58,7 @@ let
 
     # Compilers
     # rustc
-    go_1_19
+    go_1_20
     rustup
 
     # Golang tools
