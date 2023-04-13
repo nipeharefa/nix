@@ -29,6 +29,7 @@
       "wireguard-tools"
       "libpq"
       "helm"
+      "iproute2mac"
     ];
     # cleanup = "zap";
     taps = [
