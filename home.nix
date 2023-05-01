@@ -13,10 +13,12 @@ let
     (legacyPackages.google-cloud-sdk.withExtraComponents ([
       legacyPackages.google-cloud-sdk.components.gke-gcloud-auth-plugin
       ]))
+    
+    legacyPackages.flyctl
   ];
   
   defaultPackages = with pkgs; [
-    flyctl
+    # flyctl
     fish
     lcov
     nodejs-19_x

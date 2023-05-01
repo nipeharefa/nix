@@ -22,6 +22,7 @@
       "postman"
       "cloudflare-warp"
       "katalon-studio"
+      "obs"
     ];
 
     brews = [
