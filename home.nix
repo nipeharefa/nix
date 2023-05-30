@@ -21,7 +21,7 @@ let
     # flyctl
     fish
     lcov
-    nodejs-19_x
+    # nodejs-19_x
     yarn
 
 
@@ -102,6 +102,9 @@ let
     swagger-codegen3
     graphviz
     openapi-generator-cli
+
+    cargo-tauri
+    pnpm
   ];
 
   gitPkgs = with pkgs.gitAndTools; [

@@ -1,10 +1,14 @@
 { pkgs, lib, ... }:
 {
   environment.shells = with pkgs; [
-    bashInteractive
-    fish
+    # bashInteractive
+    # fish
     zsh
   ];
+
+  environment.variables = {
+    # CC = "${gcc}/bin/gcc";
+  };
 
   nix = {
     configureBuildUsers = true;

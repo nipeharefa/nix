@@ -12,9 +12,13 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    # Other sources / nix utilities
+    flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
   let
     system = "x86_64-darwin";
     inherit (darwin.lib) darwinSystem;
@@ -24,13 +28,18 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = {
       config = { allowUnfree = true; };
-      overlays = attrValues self.overlays ++ singleton (
-        final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-          inherit (final.pkgs-x86)
-            yadm
-            niv;
-        })
-      );
+      overlays = [
+        (final: prev: rec {
+            pnpm = (prev.nodePackages.pnpm.override {
+              version = "5.18.7";
+              src = pkgs.fetchurl {
+                url = "https://registry.npmjs.org/pnpm/-/pnpm-5.18.7.tgz";
+                sha512 = "7LSLQSeskkDtzAuq8DxEcVNWlqFd0ppWPT6Z4+TiS8SjxGCRSpnCeDVzwliAPd0hedl6HuUiSnDPgmg/kHUVXw==";
+              };
+            });
+            # yarn = (prev.yarn.override { inherit nodejs; });
+          })
+      ];
     };
 
     homeManagerStateVersion = "23.05";
@@ -160,5 +169,13 @@
             (self.commonModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
         };
     };
-  };
+  } // flake-utils.lib.eachDefaultSystem (system: rec {
+    legacyPackages = import inputs.nixpkgs-unstable (nixpkgsConfig // { inherit system; });
+    pkgs = nixpkgs.legacyPackages.${system};
+
+    devShells = let pkgs = self.legacyPackages.${system}; in
+      import ./devShells.nix { inherit pkgs; inherit (inputs.nixpkgs-unstable) lib; } // {
+
+      };
+  });
 }
