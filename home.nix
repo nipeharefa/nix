@@ -104,7 +104,7 @@ let
     openapi-generator-cli
 
     cargo-tauri
-    pnpm
+    # pnpm
   ];
 
   gitPkgs = with pkgs.gitAndTools; [

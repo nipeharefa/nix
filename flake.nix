@@ -7,6 +7,10 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    # rust-overlay
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     # Environment/system management
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -28,18 +32,8 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = {
       config = { allowUnfree = true; };
-      overlays = [
-        (final: prev: rec {
-            pnpm = (prev.nodePackages.pnpm.override {
-              version = "5.18.7";
-              src = pkgs.fetchurl {
-                url = "https://registry.npmjs.org/pnpm/-/pnpm-5.18.7.tgz";
-                sha512 = "7LSLQSeskkDtzAuq8DxEcVNWlqFd0ppWPT6Z4+TiS8SjxGCRSpnCeDVzwliAPd0hedl6HuUiSnDPgmg/kHUVXw==";
-              };
-            });
-            # yarn = (prev.yarn.override { inherit nodejs; });
-          })
-      ];
+      overlays = attrValues self.overlays
+          ++ singleton (inputs.rust-overlay.overlays.default);
     };
 
     homeManagerStateVersion = "23.05";

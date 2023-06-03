@@ -37,7 +37,6 @@
       "nrlquaker/createzap"
       "homebrew/cask"
     ];
-    onActivation.cleanup = "uninstall";
     onActivation.autoUpdate = true;
   };
 }

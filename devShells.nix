@@ -46,6 +46,21 @@ with pkgs;
 
 rec {
 
+  # Rust 🦀 development environments ------------------- {{{
+  # `nix develop my#rust`
+  rust = mkShell {
+    buildInputs = [
+      (rust-bin.stable.latest.minimal.override {
+        extensions = [ "rustc" ];
+      })
+    ];
+    packages = [
+      libiconv
+      darwin.apple_sdk.frameworks.AppKit
+      darwin.apple_sdk.frameworks.WebKit
+    ];
+  };
+
   # Android development environments ------------------- {{{
   #
   # `nix develop my#android29` 
