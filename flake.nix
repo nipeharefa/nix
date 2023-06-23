@@ -20,6 +20,10 @@
     # Other sources / nix utilities
     flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
     flake-utils.url = "github:numtide/flake-utils";
+
+    # Android Development
+    android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
+    android-nixpkgs.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
@@ -33,6 +37,7 @@
     nixpkgsConfig = {
       config = { allowUnfree = true; };
       overlays = attrValues self.overlays
+          ++ singleton (inputs.android-nixpkgs.overlays.default)
           ++ singleton (inputs.rust-overlay.overlays.default);
     };
 

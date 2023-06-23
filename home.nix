@@ -105,6 +105,7 @@ let
 
     cargo-tauri
     # pnpm
+    sonar-scanner-cli
   ];
 
   gitPkgs = with pkgs.gitAndTools; [

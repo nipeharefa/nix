@@ -21,7 +21,6 @@
       "iterm2"
       "postman"
       "cloudflare-warp"
-      "katalon-studio"
       "obs"
     ];
 

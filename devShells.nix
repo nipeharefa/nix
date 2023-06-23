@@ -50,12 +50,13 @@ rec {
   # `nix develop my#rust`
   rust = mkShell {
     buildInputs = [
+      libiconv
       (rust-bin.stable.latest.minimal.override {
         extensions = [ "rustc" ];
       })
     ];
     packages = [
-      libiconv
+      ffmpeg
       darwin.apple_sdk.frameworks.AppKit
       darwin.apple_sdk.frameworks.WebKit
     ];
