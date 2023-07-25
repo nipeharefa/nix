@@ -29,6 +29,7 @@ let
     podman
     qemu
     docker
+    docker-compose
 
     neovim
     vim
@@ -106,6 +107,7 @@ let
     cargo-tauri
     # pnpm
     # sonar-scanner-cli
+    colima
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
