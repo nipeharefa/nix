@@ -36,6 +36,5 @@
       "nrlquaker/createzap"
       "homebrew/cask"
     ];
-    onActivation.autoUpdate = true;
   };
 }

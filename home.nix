@@ -81,7 +81,7 @@ let
     comma # run without install
     nodePackages.node2nix
     rnix-lsp
-    home-manager
+    # home-manager
     nix-prefetch-git
     # yarn2nix
     nixpkgs-fmt
