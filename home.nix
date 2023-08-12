@@ -108,6 +108,7 @@ let
     # pnpm
     # sonar-scanner-cli
     colima
+    gnupg
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
