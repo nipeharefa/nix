@@ -22,6 +22,8 @@
       "postman"
       "cloudflare-warp"
       "obs"
+      "krisp"
+      "stats"
     ];
 
     brews = [
@@ -33,8 +35,8 @@
     ];
     # cleanup = "zap";
     taps = [
-      "nrlquaker/createzap"
-      "homebrew/cask"
+      # "nrlquaker/createzap"
+      # "homebrew/cask"
     ];
   };
 }
