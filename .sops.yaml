@@ -1,0 +1,10 @@
+keys:
+  - &nipe 4753AAAFB9CEA80BC71FD4BFB44ED4FEEA721B9E
+creation_rules:
+  - path_regex: nix/secrets/[^/]+\.(yaml|json)$
+    key_groups:
+    - pgp:
+      - *nipe
+    age: >-
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1lAveTpTw/lV0FkBpbxttxfeaoWgfWC7TnADmwhVTf,
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZPQuDCC7n1bXtV3vahNSxliOZPBbnUCf+7DqvQTanO
