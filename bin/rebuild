@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  cat <<'USAGE'
+Usage: rebuild [host]
+
+Runs darwin-rebuild for the given host (default: m1pro) and
+updates the nipeharefa home-manager profile if the CLI is available.
+USAGE
+  exit 0
+fi
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+host="${1:-m1pro}"
+
+echo "==> Rebuilding darwin host: ${host}"
+darwin-rebuild switch --flake "${repo_root}#${host}"
+
+if command -v home-manager >/dev/null 2>&1; then
+  echo "==> Updating home-manager profile"
+  home-manager switch --flake "${repo_root}#nipeharefa"
+else
+  echo "==> home-manager CLI not found; skipping user profile update"
+fi
