@@ -9,19 +9,17 @@ let
 
   legacyPackages = pkgs;
 
-  gcloud = with legacyPackages; [
-    (legacyPackages.google-cloud-sdk.withExtraComponents ([
-      legacyPackages.google-cloud-sdk.components.gke-gcloud-auth-plugin
+  gcloud = with pkgs; [
+    (google-cloud-sdk.withExtraComponents ([
+      google-cloud-sdk.components.gke-gcloud-auth-plugin
       ]))
-    
-    legacyPackages.flyctl
   ];
   
   defaultPackages = with pkgs; [
-    # flyctl
+    flyctl
     fish
-    lcov
-    # nodejs-19_x
+    # lcov
+    nodejs-18_x
     yarn
 
 
@@ -45,7 +43,6 @@ let
     redis
 
     awscli2
-    fzf
     fzy
     neofetch
     tmuxinator
@@ -77,9 +74,9 @@ let
     ################################## 
     # Useful Nix related tools
     ################################## 
-    cachix
+    # cachix
     comma # run without install
-    nodePackages.node2nix
+    # nodePackages.node2nix
     rnix-lsp
     # home-manager
     nix-prefetch-git
@@ -128,7 +125,7 @@ in {
     let apps = pkgs.buildEnv
     {
         name = "home-manager-apps";
-        paths = with pkgs; [ alacritty ];
+        paths = with pkgs; [  ];
         pathsToLink = "/Applications";
     };
     in

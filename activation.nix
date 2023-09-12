@@ -6,9 +6,11 @@ let
   shellAliases = with pkgs; {
     c = "z";
   };
-in {
+in
+{
   home = with pkgs; {
     shellAliases = shellAliases;
+    
     sessionVariables = {
       EDITOR = "nvim";
       USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
@@ -24,11 +26,3 @@ in {
     ];
   };
 }
-# {
-#   home.
-
-#   home.
-
-#   # Let Home Manager install and manage itself.
-#   programs.home-manager.enable = true;
-# } 

@@ -36,9 +36,8 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = {
       config = { allowUnfree = true; };
-      overlays = attrValues self.overlays
-          ++ singleton (inputs.android-nixpkgs.overlays.default)
-          ++ singleton (inputs.rust-overlay.overlays.default);
+      # overlays = inputs.android-nixpkgs.overlays.default
+          # ++ singleton (inputs.rust-overlay.overlays.default);
     };
 
     homeManagerStateVersion = "23.05";
@@ -136,7 +135,7 @@
       };
     };
     # end of darwin config
-    overlays = import ./modules/overlays inputs nixpkgsConfig;
+    # overlays = import ./modules/overlays inputs nixpkgsConfig;
 
     devShells = {
       default = pkgs.mkShell {
@@ -172,9 +171,9 @@
     legacyPackages = import inputs.nixpkgs-unstable (nixpkgsConfig // { inherit system; });
     pkgs = nixpkgs.legacyPackages.${system};
 
-    devShells = let pkgs = self.legacyPackages.${system}; in
-      import ./devShells.nix { inherit pkgs; inherit (inputs.nixpkgs-unstable) lib; } // {
+    # devShells = let pkgs = self.legacyPackages.${system}; in
+      # import ./devShells.nix { inherit pkgs; inherit (inputs.nixpkgs-unstable) lib; } // {
 
-      };
+      # };
   });
 }

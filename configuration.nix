@@ -1,15 +1,45 @@
-{ pkgs, lib, ... }:
+{ pkgs, config,lib, ... }:
 {
-  environment.shells = with pkgs; [
-    # bashInteractive
-    # fish
-    zsh
-  ];
+  system.activationScripts.applications.text = lib.mkForce ''
+    echo "setting up ~/Applications..." >&2
+    applications="$HOME/Applications"
+    nix_apps="$applications/Nix Apps"
 
-  environment.variables = {
-    # CC = "${gcc}/bin/gcc";
+    # Delete the directory to remove old links
+    rm -rf "$nix_apps"
+    mkdir -p "$nix_apps"
+
+    echo "nipe $nix_apps" >&2
+
+    find ${config.system.build.applications}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+    while read src; do
+      # Spotlight does not recognize symlinks, it will ignore directory we link to the applications folder.
+      # It does understand MacOS aliases though, a unique filesystem feature. Sadly they cannot be created
+      # from bash (as far as I know), so we use the oh-so-great Apple Script instead.
+      /usr/bin/osascript -e "
+          set fileToAlias to POSIX file \"$src\" 
+          set applicationsFolder to POSIX file \"$nix_apps\"
+
+          tell application \"Finder\"
+              make alias file to fileToAlias at applicationsFolder
+              # This renames the alias; 'mpv.app alias' -> 'mpv.app'
+              set name of result to \"$(rev <<< "$src" | cut -d'/' -f1 | rev)\"
+          end tell
+      " 1>/dev/null
+    done
+  '';
+  environment = with pkgs; {
+    shells = [
+      fish
+      zsh
+    ];
+
+    variables = {
+      SHELL = "${fish}/bin/fish";
+      CC = "${gcc}/bin/gcc";
+    };
   };
-
+  
   nix = {
     configureBuildUsers = true;
     useDaemon = true;
@@ -27,34 +57,21 @@
       ];
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "gowi.cachix.org-1:IsoKXakETjg57xeM4tmS162ZLh04GocIBqhxTC7kF9k="
-        "tricktron.cachix.org-1:N1aBeQuELyEAOgvizaDC/qqFltwv7N7oSMaNozyDz6w="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
       keep-outputs = true;
       keep-derivations = true;
       substituters = [
-        "https://tricktron.cachix.org"
         "https://cache.nixos.org/"
-        "https://gowi.cachix.org"
-        "https://nix-community.cachix.org"
       ];
       extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin" ];
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    # yggdrasil
-    # iterm2
-    dnsproxy
-    dnscrypt-proxy2
-    # terminal-notifier
-  ];
-
   # font
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     recursive
+    noto-fonts-emoji
     (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" ]; })
   ];
 }
