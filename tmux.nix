@@ -2,6 +2,7 @@
 
 {
   programs.tmux.enable = true;
+  programs.tmux.terminal = "screen-256color";
   programs.tmux.extraConfig = ''
     set -g bell-action any
     set -g mouse on

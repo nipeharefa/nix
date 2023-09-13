@@ -5,6 +5,7 @@ let
   a = 1;
   shellAliases = with pkgs; {
     c = "z";
+    tf = "terraform";
   };
 in
 {

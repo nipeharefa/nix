@@ -33,7 +33,7 @@ let
     vim
 
     hasura-cli
-    exa
+    eza
     zsh
     air
     python310

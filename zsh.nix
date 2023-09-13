@@ -10,14 +10,12 @@
     vscode = {
         enable = true;
     };
-    tmux = {
+    eza = {
       enable = true;
     };
     zsh = {
       enable = true;
       shellAliases = {
-        ls = "exa";
-        ll = "ls -l";
         tx = "tmuxinator";
         nixgc = "nix-collect-garbage -d";
         myip = "curl ifconfig.co";
@@ -56,8 +54,8 @@
         [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
         zinit load agkozak/zsh-z
         zinit light Aloxaf/fzf-tab
-        # preview directory's content with exa when completing cd
-        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+        # preview directory's content with eza when completing cd
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
         zstyle ':completion:*:git-checkout:*' sort false
 
         eval "$(direnv hook zsh)"
