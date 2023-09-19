@@ -13,7 +13,7 @@ in
     shellAliases = shellAliases;
     
     sessionVariables = {
-      EDITOR = "nvim";
+      # EDITOR = "nvim";
       USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
     };
     sessionPath = [

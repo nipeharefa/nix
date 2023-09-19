@@ -1,7 +1,10 @@
-{ config, environment, pkgs, ... }:
+{ ... }:
 
 let
-    work = 1;
+    nipe = {
+      name = "Nipe";
+      email = "me@nipeharefa.dev";
+    };
 in
 {
   programs.git = {
@@ -28,5 +31,11 @@ in
       can = "commit --amend --no-edit";
       recent = "branch --sort=-committerdate --format=\'%(committerdate:relative)%09%(refname:short)\'";
     };
+    includes = [
+      {
+        condition = "gitdir:~/projects/gowi";
+        contents.user = nipe;
+      }
+    ];
   };
 }

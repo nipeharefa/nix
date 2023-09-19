@@ -29,7 +29,7 @@ let
     docker
     docker-compose
 
-    neovim
+    # neovim
     vim
 
     hasura-cli

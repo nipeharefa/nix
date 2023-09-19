@@ -12,6 +12,48 @@
     };
     eza = {
       enable = true;
+      enableAliases = true;
+    };
+    neovim = {
+      enable = true;
+      vimAlias = true;
+      extraConfig = ''
+        set nocompatible
+        set nobackup
+        set hidden
+        set list
+        set listchars=tab:↦\ ,trail:⬝
+        set clipboard=unnamedplus
+        set mouse=a
+        set signcolumn=yes:2
+        
+        set relativenumber
+        autocmd InsertEnter * :set number
+        autocmd InsertLeave * :set relativenumber
+
+
+        set wildmenu
+        set wildmode=longest:full,full
+        set scrolloff=8
+        set sidescrolloff=8
+        set updatetime=300
+
+        nnoremap <C-n> :NERDTree<CR>
+        nnoremap <C-t> :NERDTreeToggle<CR>
+      '';
+      plugins = with pkgs.vimPlugins; [
+        ctrlp
+        nerdtree
+        nerdtree-git-plugin
+        vim-devicons
+
+        #keymap
+        # {
+        #   plugin = keymapConfig;
+        #   type = "lua";
+        #   config = builtins.readFile ../config/nvim/keymap.lua;
+        # }
+      ];
     };
     zsh = {
       enable = true;
