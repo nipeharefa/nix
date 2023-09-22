@@ -1,14 +1,34 @@
-{ pkgs, ... }:
-
+{ pkgs, lib, ... }:
+ 
 {
   programs = {
     fzf = {
-        enable = true;
-        fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
-        changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
+      enable = true;
+      fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
+      changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     };
     vscode = {
-        enable = true;
+      enable = true;
+      extensions = with pkgs.vscode-marketplace; [
+        bbenoist.nix
+        bierner.markdown-mermaid
+        dbaeumer.vscode-eslint
+        eamodio.gitlens
+        esbenp.prettier-vscode
+        golang.go
+        redhat.vscode-yaml
+        vscodevim.vim
+        bmewburn.vscode-intelephense-client
+      ];
+      userSettings = {
+        # Vim
+        "vim.enableNeovim" = true;
+        "vim.highlightedyank.enable" = true;
+
+        "[yaml]" = {
+          "editor.defaultFormatter" = "redhat.vscode-yaml";
+        };
+      };
     };
     eza = {
       enable = true;

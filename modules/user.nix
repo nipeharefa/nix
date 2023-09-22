@@ -22,7 +22,7 @@ in
         default = null;
       };
       useHomebrew = mkOption {
-        type = with types; nullOr bool; 
+        type = with types; nullOr bool;
         default = false;
       };
     };

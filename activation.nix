@@ -11,7 +11,7 @@ in
 {
   home = with pkgs; {
     shellAliases = shellAliases;
-    
+
     sessionVariables = {
       # EDITOR = "nvim";
       USE_GKE_GCLOUD_AUTH_PLUGIN = "True";

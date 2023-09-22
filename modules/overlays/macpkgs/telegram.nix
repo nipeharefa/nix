@@ -47,12 +47,12 @@ let
 
     nativeBuildInputs = [ undmg ];
 
-#     sourceRoot = "Telegram.app";
-	sourceRoot = ".";
+    #     sourceRoot = "Telegram.app";
+    sourceRoot = ".";
 
     installPhase = ''
-      mkdir -p $out/Applications
-    	cp -r "Telegram.app" $out/Applications
+        mkdir -p $out/Applications
+      	cp -r "Telegram.app" $out/Applications
     '';
   };
 in

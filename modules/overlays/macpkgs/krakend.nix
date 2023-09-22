@@ -12,16 +12,16 @@ buildGoModule rec {
   };
 
   vendorSha256 = "sha256-j4UMN8ko45BCc5tjZjCpvoX0I05xKnx1Ap10zPV0EtU=";
-  
+
   subPackages = [ "cmd/krakend-ce" ];
-  
+
   ldflags = [
-        "-s"
-        "-w"
-        "-X github.com/luraproject/lura/v2/core.KrakendVersion=${version}"
-        "-X github.com/luraproject/lura/v2/core.GoVersion=${lib.getVersion go}"
-        "-X github.com/luraproject/lura/v2/core.GlibcVersion=${lib.getVersion glibc}"
-    ];
+    "-s"
+    "-w"
+    "-X github.com/luraproject/lura/v2/core.KrakendVersion=${version}"
+    "-X github.com/luraproject/lura/v2/core.GoVersion=${lib.getVersion go}"
+    "-X github.com/luraproject/lura/v2/core.GlibcVersion=${lib.getVersion glibc}"
+  ];
 
   meta = with lib; {
     description = "KrakenD Community Edition";

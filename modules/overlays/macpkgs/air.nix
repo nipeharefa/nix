@@ -12,9 +12,9 @@ buildGoModule rec {
   };
 
   vendorSha256 = "sha256-+hZpCIDASPerI7Wetpx+ah2H5ODjoeyoqUi+uFwR/9A=";
-  
+
   subPackages = [ "." ];
-  
+
   ldflags = [ "-s" "-w" "-X=main.airVersion=${version}" ];
 
   meta = with lib; {

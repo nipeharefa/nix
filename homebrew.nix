@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 {
-	homebrew = {
+  homebrew = {
     enable = true;
     casks = [
       "dbeaver-community"

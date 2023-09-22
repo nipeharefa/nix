@@ -33,7 +33,7 @@
     #set -g message-bg colour221
     #set -g message-attr bold
     set -g status-right '#{cpu_bg_color} CPU: #{cpu_icon} #{cpu_percentage} #{cpu_temp}'
-    '' + lib.optionalString pkgs.stdenv.isLinux ''
+  '' + lib.optionalString pkgs.stdenv.isLinux ''
     if -b 'command -v xsel > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | xsel -i -b"'
     if -b '! command -v xsel > /dev/null 2>&1 && command -v xclip > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | xclip -i -selection clipboard >/dev/null 2>&1"'
   '' + lib.optionalString pkgs.stdenv.isDarwin ''

@@ -45,7 +45,5 @@ in
   #   nodePackages = prev.nodePackages // import ./pkgs/node-packages { pkgs = prev; };
   # };
 
-  pnpm = final: prev: {
-
-  };
+  pnpm = final: prev: { };
 }

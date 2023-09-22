@@ -1,10 +1,10 @@
 { ... }:
 
 let
-    nipe = {
-      name = "Nipe";
-      email = "me@nipeharefa.dev";
-    };
+  nipe = {
+    name = "Nipe";
+    email = "me@nipeharefa.dev";
+  };
 in
 {
   programs.git = {

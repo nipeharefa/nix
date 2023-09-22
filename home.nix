@@ -3,7 +3,7 @@
 let
 
   yubiPkgs = with pkgs; [
-    yubikey-manager  # yubikey manager cli
+    yubikey-manager # yubikey manager cli
     yubioath-desktop # yubikey OTP manager (gui)
   ];
 
@@ -12,9 +12,9 @@ let
   gcloud = with pkgs; [
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.gke-gcloud-auth-plugin
-      ]))
+    ]))
   ];
-  
+
   defaultPackages = with pkgs; [
     flyctl
     fish
@@ -110,25 +110,27 @@ let
 
   gitPkgs = with pkgs.gitAndTools; [
     diff-so-fancy # git diff with colors
-    git-crypt     # git files encryption
+    git-crypt # git files encryption
     # hub           # github command-line client
-    tig           # diff and commit view
+    tig # diff and commit view
   ];
-in {
+in
+{
 
   programs.tmux.enable = true;
   programs.tmux.terminal = "screen-256color";
   home.packages = defaultPackages ++ gitPkgs ++ gcloud;
-  
+
   home.file = {
     "Applications/home-manager".source =
-    let apps = pkgs.buildEnv
-    {
-        name = "home-manager-apps";
-        paths = with pkgs; [  ];
-        pathsToLink = "/Applications";
-    };
-    in
-    lib.mkIf pkgs.stdenv.targetPlatform.isDarwin "${apps}/Applications";
+      let
+        apps = pkgs.buildEnv
+          {
+            name = "home-manager-apps";
+            paths = with pkgs; [ ];
+            pathsToLink = "/Applications";
+          };
+      in
+      lib.mkIf pkgs.stdenv.targetPlatform.isDarwin "${apps}/Applications";
   };
 }
