@@ -58,7 +58,7 @@ let
 
     # Compilers
     # rustc
-    go_1_20
+    go_1_21
     rustup
 
     # Golang tools
@@ -106,6 +106,7 @@ let
     # sonar-scanner-cli
     colima
     gnupg
+    # zinit
   ];
 
   gitPkgs = with pkgs.gitAndTools; [

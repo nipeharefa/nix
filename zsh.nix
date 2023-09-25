@@ -107,6 +107,7 @@
       '';
 
       initExtra = ''
+        setopt NO_BANG_HIST
         zinit light joshskidmore/zsh-fzf-history-search
         zinit pack"default+keys" for fzf
         export ZSH_FZF_HISTORY_SEARCH_BIND='^f'
@@ -117,15 +118,12 @@
         zinit load agkozak/zsh-z
         zinit light Aloxaf/fzf-tab
         # preview directory's content with eza when completing cd
-        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
         zstyle ':completion:*:git-checkout:*' sort false
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
-        eval "$(direnv hook zsh)"
-        npm config set prefix '~/.npm-global'
+        # eval "$(direnv hook zsh)"
       '';
     };
+    
   };
-
-  # programs.tmux.enable = true;
-  # programs.tmux.terminal = "screen-256color";
 }
