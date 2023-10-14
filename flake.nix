@@ -3,8 +3,6 @@
 
   inputs = {
     # Package sets
-    # nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    # nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-23.15-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # rust-overlay
@@ -81,6 +79,7 @@
             # home-manager.useUserPackages = true;
             # Add a registry entry for this flake
             nix.registry.my.flake = self;
+            imports = [  ];
           }
         )
       ];
@@ -119,20 +118,8 @@
             ./homebrew.nix
             {
               users.primaryUser = ci;
-              networking.computerName = "gowi.m1pro";
-              networking.hostName = "gowi-m1pro";
             }
-          ];
-        };
-
-        cicd = makeOverridable darwinSystem {
-          system = "x86_64-darwin";
-          modules = nixDarwinCommonModules ++ [
-            {
-              users.primaryUser = ci;
-              networking.computerName = "gowi.flock";
-              networking.hostName = "gowi.flock";
-            }
+            # ./mac-symlink-applications.nix
           ];
         };
       };

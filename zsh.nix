@@ -20,15 +20,15 @@
         vscodevim.vim
         bmewburn.vscode-intelephense-client
       ];
-      userSettings = {
-        # Vim
-        "vim.enableNeovim" = true;
-        "vim.highlightedyank.enable" = true;
+      # userSettings = {
+      #   # Vim
+      #   "vim.enableNeovim" = true;
+      #   "vim.highlightedyank.enable" = true;
 
-        "[yaml]" = {
-          "editor.defaultFormatter" = "redhat.vscode-yaml";
-        };
-      };
+      #   "[yaml]" = {
+      #     "editor.defaultFormatter" = "redhat.vscode-yaml";
+      #   };
+      # };
     };
     eza = {
       enable = true;
@@ -96,6 +96,11 @@
         theme = "robbyrussell";
       };
       initExtraBeforeCompInit = ''
+        # Nix
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
+        # End Nix
         if [[ ! -f "$HOME/.zinit/bin/zi.zsh" ]]; then
             print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
             command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"

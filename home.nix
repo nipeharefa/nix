@@ -1,4 +1,4 @@
-{ inputs, pkgs, system, lib, ... }:
+{ inputs, config, pkgs, system, lib, ... }:
 
 let
 
@@ -82,7 +82,6 @@ let
     nix-prefetch-git
     # yarn2nix
     nixpkgs-fmt
-    rnix-hashes
 
     terraform
 
@@ -121,17 +120,4 @@ in
   programs.tmux.enable = true;
   programs.tmux.terminal = "screen-256color";
   home.packages = defaultPackages ++ gitPkgs ++ gcloud;
-
-  home.file = {
-    "Applications/home-manager".source =
-      let
-        apps = pkgs.buildEnv
-          {
-            name = "home-manager-apps";
-            paths = with pkgs; [ ];
-            pathsToLink = "/Applications";
-          };
-      in
-      lib.mkIf pkgs.stdenv.targetPlatform.isDarwin "${apps}/Applications";
-  };
 }

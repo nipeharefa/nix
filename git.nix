@@ -10,7 +10,7 @@ in
   programs.git = {
     enable = true;
     extraConfig = {
-      pull.rebase = true;
+      pull.ff = "only";
       gpg.program = "gpg";
       init.defaultBranch = "main";
       url = {
