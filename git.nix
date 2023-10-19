@@ -11,6 +11,7 @@ in
     enable = true;
     extraConfig = {
       pull.ff = "only";
+      pull.rebase = true;
       gpg.program = "gpg";
       init.defaultBranch = "main";
       url = {
