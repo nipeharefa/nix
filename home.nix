@@ -32,7 +32,6 @@ let
     # neovim
     vim
 
-    hasura-cli
     eza
     zsh
     air
