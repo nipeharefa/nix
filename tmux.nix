@@ -9,9 +9,9 @@
     # Keep your finger on ctrl, or don't
     bind-key ^D detach-client
     
-    bind-key v split-window -h -p 50 -c "#{pane_current_path}"
+    bind-key v split-window -h  -c "#{pane_current_path}"
     bind-key ^V split-window -h -p 50 -c "#{pane_current_path}"
-    bind-key s split-window -p 50 -c "#{pane_current_path}"
+    bind-key s split-window -c "#{pane_current_path}"
     bind-key ^S split-window -p 50 -c "#{pane_current_path}"
     # act like vim
     setw -g mode-keys vi
