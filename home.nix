@@ -76,7 +76,6 @@ let
     # cachix
     comma # run without install
     # nodePackages.node2nix
-    rnix-lsp
     # home-manager
     nix-prefetch-git
     # yarn2nix

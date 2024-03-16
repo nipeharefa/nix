@@ -32,7 +32,7 @@
     };
     eza = {
       enable = true;
-      enableAliases = true;
+      enableBashIntegration = true;
     };
     neovim = {
       enable = true;
@@ -89,7 +89,7 @@
           git branch --v | grep "\[gone\]" | awk '{print $1}' | xargs git branch -D
         '';
       };
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" "kubectl" "golang" ];
