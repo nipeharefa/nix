@@ -57,7 +57,7 @@ let
 
     # Compilers
     # rustc
-    go_1_21
+    go_1_22
     rustup
 
     # Golang tools
