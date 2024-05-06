@@ -53,7 +53,7 @@ let
 
     direnv
     hugo
-    dnsproxy
+    # dnsproxy
 
     # Compilers
     # rustc
