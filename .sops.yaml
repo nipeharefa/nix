@@ -1,0 +1,7 @@
+keys:
+  - &nipe 13F6532D903FCCCF3CB1F93F8063CB1E61B94193
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|norg)$
+    key_groups:
+    - pgp:
+      - *nipe

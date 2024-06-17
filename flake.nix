@@ -2,51 +2,25 @@
    description = "my darwin system";
    outputs = inputs: inputs.parts.lib.mkFlake { inherit inputs; } {
     systems = [
-      "aarch64-darwin"
+     "aarch64-darwin"
+      "x86_64-darwin"
     ];
 
-    flake = {
-        description = "A flake using Home Manager and perSystem configuration.";
+    imports = [
+      inputs.ez-configs.flakeModule
+      ./devShells.nix
+    ];
 
-        darwinConfigurations = {
-          m1pro = inputs.darwin.lib.darwinSystem {
-            system = "aarch64-darwin";
-            modules = [
-              ./configuration.nix
-              ./homebrew.nix
-              inputs.home-manager.darwinModules.home-manager
-              ({ pkgs, config, ... }: {
-                nixpkgs = {
-                  config = { allowUnfree = true; };
-                };
-                users.users.nipeharefa = {
-                  home = "/Users/nipeharefa";
-                  shell = pkgs.oh-my-zsh;
-                };
-                system.stateVersion = 4;
-                home-manager.useGlobalPkgs = true;
-                # home-manager.useUserPackages = true;
-                home-manager.users.nipeharefa = {
-                  imports = [
-                    ./home.nix
-                    ./zsh.nix
-                    ./git.nix
-                    ./activation.nix
-                    ./tmux.nix
-                    # ./devShells.nix
-                  ];
-                  home.stateVersion = "24.05";
-                  home.packages = [
-                    pkgs.sops
-                  ];
-                };
-              })
-            ];
-          };
+    ezConfigs = {
+      root = ./nix;
+      globalArgs = { inherit inputs; };
+      # home.users.root.importDefault = false;
+      darwin.hosts = {
+        m1pro = {
+          userHomeModules = [ "nipeharefa" ];
         };
-        
       };
-
+    };
   };
    inputs = {
 
@@ -63,5 +37,20 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     parts.url = "github:hercules-ci/flake-parts";
+
+    ez-configs = {
+      url = "github:ehllie/ez-configs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "parts";
+      };
+    };
+
+    # sops
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
    };
 }

@@ -104,6 +104,7 @@ let
     # sonar-scanner-cli
     colima
     gnupg
+    sops
 
     nodePackages.pnpm
     # zinit
