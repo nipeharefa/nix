@@ -9,7 +9,13 @@
       tmux
       zsh
       ;
-  } ++ [inputs.sops-nix.homeManagerModules.sops];
+  } ++ [
+    inputs.sops.homeManagerModules.sops
+    ({ ... }: {
+      home.sessionVariables.EDITOR = "nvim";
+      home.sessionVariables.OPENAI_API_KEY = "$(cat ~/.config/sops-nix/secrets/openai_api_key)";
+    })
+  ];
 
   nixpkgs.config = {
     allowUnfree = true;
