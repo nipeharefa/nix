@@ -8,7 +8,7 @@
       changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     };
     vscode = {
-      enable = true;
+      enable = false;
       extensions = with pkgs.vscode-marketplace; [
         bbenoist.nix
         bierner.markdown-mermaid

@@ -1,0 +1,7 @@
+keys:
+  - &nipe 4753AAAFB9CEA80BC71FD4BFB44ED4FEEA721B9E
+creation_rules:
+  - path_regex: nix/secrets/[^/]+\.(yaml|json)$
+    key_groups:
+    - pgp:
+      - *nipe
