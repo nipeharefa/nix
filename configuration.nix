@@ -45,10 +45,10 @@
   };
 
   # font
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
-    recursive
-    noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" ]; })
-  ];
+  # fonts.fontDir.enable = true;
+  # fonts.fonts = with pkgs; [
+  #   recursive
+  #   noto-fonts-emoji
+  #   (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" ]; })
+  # ];
 }

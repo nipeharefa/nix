@@ -82,6 +82,7 @@ let
     nixpkgs-fmt
 
     terraform
+    
 
     # krakend
 
@@ -103,6 +104,8 @@ let
     # sonar-scanner-cli
     colima
     gnupg
+
+    nodePackages.pnpm
     # zinit
   ];
 
@@ -117,5 +120,5 @@ in
 
   programs.tmux.enable = true;
   programs.tmux.terminal = "screen-256color";
-  home.packages = defaultPackages ++ gitPkgs ++ gcloud;
+  home.packages = defaultPackages ++ gitPkgs;
 }

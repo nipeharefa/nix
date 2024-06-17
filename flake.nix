@@ -1,168 +1,67 @@
 {
-  description = "Home Manager configuration of Jane Doe";
+   description = "my darwin system";
+   outputs = inputs: inputs.parts.lib.mkFlake { inherit inputs; } {
+    systems = [
+      "aarch64-darwin"
+    ];
 
-  inputs = {
-    # Package sets
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake = {
+        description = "A flake using Home Manager and perSystem configuration.";
 
-    # rust-overlay
-    rust-overlay.url = "github:oxalica/rust-overlay";
-    rust-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
+        darwinConfigurations = {
+          m1pro = inputs.darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            modules = [
+              ./configuration.nix
+              ./homebrew.nix
+              inputs.home-manager.darwinModules.home-manager
+              ({ pkgs, config, ... }: {
+                nixpkgs = {
+                  config = { allowUnfree = true; };
+                };
+                users.users.nipeharefa = {
+                  home = "/Users/nipeharefa";
+                  shell = pkgs.oh-my-zsh;
+                };
+                system.stateVersion = 4;
+                home-manager.useGlobalPkgs = true;
+                # home-manager.useUserPackages = true;
+                home-manager.users.nipeharefa = {
+                  imports = [
+                    ./home.nix
+                    ./zsh.nix
+                    ./git.nix
+                    ./activation.nix
+                    ./tmux.nix
+                    # ./devShells.nix
+                  ];
+                  home.stateVersion = "24.05";
+                  home.packages = [
+                    pkgs.sops
+                  ];
+                };
+              })
+            ];
+          };
+        };
+        
+      };
 
-    # Environment/system management
-    darwin.url = "github:LnL7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    # Other sources / nix utilities
-    flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
-    flake-utils.url = "github:numtide/flake-utils";
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-    };
   };
+   inputs = {
 
-  outputs = { self, nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
-    let
-      system = "x86_64-darwin";
-      inherit (darwin.lib) darwinSystem;
-      inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
-      pkgs = nixpkgs.legacyPackages.${system};
+   ## -- nixpkgs 
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.follows = "nixpkgs-unstable";
 
-      # Configuration for `nixpkgs`
-      nixpkgsConfig = {
-        config = { allowUnfree = true; };
-        overlays = [
-          inputs.nix-vscode-extensions.overlays.default
-        ];
-        # ++ singleton (inputs.rust-overlay.overlays.default);
-      };
+    darwin.url = "github:LnL7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-      homeManagerStateVersion = "23.05";
-      primaryUserInfo = {
-        username = "nipeharefa";
-        fullName = "Nipe Harefa";
-        email = "me@nipeharefa.dev";
-        nixConfigDirectory = "/Users/nipeharefa/.config/nixpkgs";
-      };
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-      ci = {
-        username = "ci";
-        fullName = "ci";
-        email = "ci@nipeharefa.dev";
-        nixConfigDirectory = "/Users/ci/.config/nixpkgs";
-      };
-      nixDarwinCommonModules = attrValues self.commonModules ++ attrValues self.darwinModules ++ [
-        ./configuration.nix
-        # ./homebrew.nix
-        home-manager.darwinModules.home-manager
-        (
-          { config, lib, pkgs, ... }:
-          let
-            inherit (config.users) primaryUser;
-          in
-          {
-            nixpkgs = nixpkgsConfig;
-            # `home-manager` config
-            users.users.nipeharefa = {
-              home = "/Users/nipeharefa";
-              shell = pkgs.oh-my-zsh;
-            };
-            home-manager.users.nipeharefa = {
-              imports = attrValues self.homeManagerModules;
-              home.stateVersion = homeManagerStateVersion;
-            };
-            home-manager.useGlobalPkgs = true;
-            home-manager.extraSpecialArgs = { inherit inputs system; };
-            # home-manager.useUserPackages = true;
-            # Add a registry entry for this flake
-            nix.registry.my.flake = self;
-            imports = [  ];
-          }
-        )
-      ];
-      forAllSystems = nixpkgs.lib.genAttrs
-        [
-          "aarch64-darwin"
-          "x86_64-darwin"
-        ];
-    in
-    {
-      darwinConfigurations = rec {
-        bootstrap-x86 = makeOverridable darwinSystem {
-          system = "x86_64-darwin";
-          modules = [
-            ./configuration.nix
-            { nixpkgs = nixpkgsConfig; }
-          ];
-        };
-
-        bootstrap-arm = bootstrap-x86.override { system = "aarch64-darwin"; };
-
-        gowi = bootstrap-x86.override {
-          modules = nixDarwinCommonModules ++ [
-            ./homebrew.nix
-            {
-              users.primaryUser = primaryUserInfo;
-              networking.computerName = "gowi";
-              networking.hostName = "gowi";
-            }
-          ];
-        };
-
-        m1pro = makeOverridable darwinSystem {
-          system = "aarch64-darwin";
-          modules = nixDarwinCommonModules ++ [
-            ./homebrew.nix
-            {
-              users.primaryUser = ci;
-            }
-            # ./mac-symlink-applications.nix
-          ];
-        };
-      };
-      # end of darwin config
-      # overlays = import ./modules/overlays inputs nixpkgsConfig;
-
-      devShells = {
-        default = pkgs.mkShell {
-          name = "Your Project";
-          buildInputs = with pkgs; [
-            terragrunt
-            buf
-            swagger-codegen3
-            toxiproxy
-          ];
-        };
-      };
-
-      commonModules = {
-        users-primaryUser = import ./modules/user.nix;
-      };
-
-      darwinModules = { };
-      # `home-manager` modules
-      homeManagerModules = {
-        rumah = import ./home.nix;
-        act = import ./activation.nix;
-        gowi-tmux = import ./tmux.nix;
-        zsh-extra = import ./zsh.nix;
-        gowi-git = import ./git.nix;
-
-        home-user-info = { lib, ... }: {
-          options.home.user-info =
-            (self.commonModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
-        };
-      };
-    } // flake-utils.lib.eachDefaultSystem (system: rec {
-      legacyPackages = import inputs.nixpkgs-unstable (nixpkgsConfig // { inherit system; });
-      pkgs = nixpkgs.legacyPackages.${system};
-
-      # devShells = let pkgs = self.legacyPackages.${system}; in
-      # import ./devShells.nix { inherit pkgs; inherit (inputs.nixpkgs-unstable) lib; } // {
-
-      # };
-    });
+    parts.url = "github:hercules-ci/flake-parts";
+   };
 }
