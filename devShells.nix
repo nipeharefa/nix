@@ -34,7 +34,6 @@
             postgresql_12
             gnumake
             libxml2
-            rubyfmt
             libyaml
           ];
         };
