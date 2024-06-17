@@ -16,7 +16,6 @@ let
   ];
 
   defaultPackages = with pkgs; [
-    flyctl
     fish
     # lcov
     nodejs-18_x
@@ -74,15 +73,15 @@ let
     # Useful Nix related tools
     ################################## 
     # cachix
-    comma # run without install
+    # comma # run without install
     # nodePackages.node2nix
     # home-manager
-    nix-prefetch-git
+    # nix-prefetch-git
     # yarn2nix
     nixpkgs-fmt
 
     terraform
-    
+
 
     # krakend
 
@@ -93,11 +92,6 @@ let
 
     # mac
     cocoapods
-
-    # Swagger
-    swagger-codegen3
-    graphviz
-    openapi-generator-cli
 
     cargo-tauri
     # pnpm

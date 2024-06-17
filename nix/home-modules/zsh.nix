@@ -1,5 +1,5 @@
 { pkgs, lib, ... }:
- 
+
 {
   programs = {
     fzf = {
@@ -129,6 +129,6 @@
         # eval "$(direnv hook zsh)"
       '';
     };
-    
+
   };
 }

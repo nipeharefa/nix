@@ -1,15 +1,16 @@
 { ezModules, inputs, lib, ... }:
 {
 
-  imports = lib.attrValues {
-    inherit (ezModules)
-      git
-      home
-      shell-generic
-      tmux
-      zsh
-      ;
-  } ++ [
+  imports = lib.attrValues
+    {
+      inherit (ezModules)
+        git
+        home
+        shell-generic
+        tmux
+        zsh
+        ;
+    } ++ [
     inputs.sops.homeManagerModules.sops
     ({ ... }: {
       home.sessionVariables.EDITOR = "nvim";

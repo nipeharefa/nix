@@ -1,8 +1,8 @@
 {
-   description = "my darwin system";
-   outputs = inputs: inputs.parts.lib.mkFlake { inherit inputs; } {
+  description = "my darwin system";
+  outputs = inputs: inputs.parts.lib.mkFlake { inherit inputs; } {
     systems = [
-     "aarch64-darwin"
+      "aarch64-darwin"
       "x86_64-darwin"
     ];
 
@@ -22,9 +22,9 @@
       };
     };
   };
-   inputs = {
+  inputs = {
 
-   ## -- nixpkgs 
+    ## -- nixpkgs 
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/release-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -51,5 +51,5 @@
     sops.inputs.nixpkgs.follows = "nixpkgs";
     sops.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
 
-   };
+  };
 }

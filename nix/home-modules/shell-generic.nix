@@ -6,7 +6,8 @@ let
     tf = "terraform";
   };
 
-in {
+in
+{
   home = {
     shellAliases = shellAliases;
     sessionVariables = {
@@ -15,7 +16,7 @@ in {
       GOWI = "${config.sops.secrets.openai_api_key.path}";
     };
   };
-  
+
   # sops = {
   #   enable = true;
   # };
