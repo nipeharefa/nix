@@ -4,6 +4,7 @@
   imports = lib.attrValues
     {
       inherit (ezModules)
+        awscli
         git
         home
         shell-generic

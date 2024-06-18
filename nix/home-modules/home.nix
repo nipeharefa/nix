@@ -7,18 +7,10 @@ let
     yubioath-desktop # yubikey OTP manager (gui)
   ];
 
-  legacyPackages = pkgs;
-
-  gcloud = with pkgs; [
-    (google-cloud-sdk.withExtraComponents ([
-      google-cloud-sdk.components.gke-gcloud-auth-plugin
-    ]))
-  ];
-
   defaultPackages = with pkgs; [
     fish
     # lcov
-    nodejs-18_x
+    nodejs_20
     yarn
 
 
@@ -40,7 +32,7 @@ let
 
     redis
 
-    awscli2
+    # awscli2
     fzy
     neofetch
     tmuxinator
@@ -63,21 +55,7 @@ let
     golangci-lint
     go-mockery
 
-    ################################## 
-    # Communication
-    ################################## 
-    # discord-ptb
-    # slack
 
-    ################################## 
-    # Useful Nix related tools
-    ################################## 
-    # cachix
-    # comma # run without install
-    # nodePackages.node2nix
-    # home-manager
-    # nix-prefetch-git
-    # yarn2nix
     nixpkgs-fmt
 
     terraform
@@ -113,7 +91,5 @@ let
 in
 {
 
-  programs.tmux.enable = true;
-  programs.tmux.terminal = "screen-256color";
   home.packages = defaultPackages ++ gitPkgs;
 }
