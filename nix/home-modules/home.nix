@@ -80,6 +80,7 @@ let
 
     nodePackages.pnpm
     # zinit
+    git-cliff
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
