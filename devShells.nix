@@ -10,6 +10,13 @@
         bun = pkgs.mkShell {
           buildInputs = [ pkgs.bun ];
         };
+        fe = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            nodejs_20
+            yarn
+            nodePackages.pnpm
+           ];
+        };
         flyctl = pkgs.mkShell {
           buildInputs = [ pkgs.flyctl ];
         };
