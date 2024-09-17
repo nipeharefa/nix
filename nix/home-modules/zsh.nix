@@ -92,7 +92,7 @@
       autosuggestion.enable = true;
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "kubectl" "golang" ];
+        plugins = [ "git" "kubectl" "golang" "docker" "history"];
         theme = "robbyrussell";
       };
       initExtraBeforeCompInit = ''
