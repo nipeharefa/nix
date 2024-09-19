@@ -17,7 +17,7 @@
         esbenp.prettier-vscode
         golang.go
         redhat.vscode-yaml
-        vscodevim.vim
+        asvetliakov.vscode-neovim
         bmewburn.vscode-intelephense-client
       ];
       # userSettings = {
