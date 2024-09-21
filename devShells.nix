@@ -40,6 +40,7 @@
             ruby_3_2
             postgresql_12
             gnumake
+            gsl
             libxml2
             libyaml
           ];
