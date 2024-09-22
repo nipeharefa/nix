@@ -15,7 +15,6 @@ let
 
 
     # container
-    podman
     qemu
     docker
     docker-compose
@@ -24,7 +23,6 @@ let
     vim
 
     eza
-    zsh
     air
     python310
     yq
@@ -48,7 +46,7 @@ let
 
     # Compilers
     # rustc
-    go_1_22
+    go_1_23
     rustup
 
     # Golang tools
@@ -66,7 +64,7 @@ let
     kubectl
     kubectx
     viddy
-    buf
+    # buf
 
     # mac
     cocoapods

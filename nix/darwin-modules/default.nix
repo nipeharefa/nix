@@ -1,5 +1,4 @@
 { pkgs, inputs, ... }: {
-  # imports =  [inputs.sops-nix.nixosModules.default];
   homebrew = {
     enable = true;
     casks = [
@@ -40,10 +39,13 @@
     ];
   };
   nix = {
+    # binary-caches = [ "https://cache.komunix.org/" "https://cache.nixos.org/"];
     extraOptions = "experimental-features = nix-command flakes";
     settings = {
+      fallback = true;
       trusted-users = [ "@admin" ];
-      trusted-substituters = [ "https://nix-community.cachix.org" "https://r17.cachix.org/" ];
+      substituters = pkgs.lib.mkBefore [ "https://cache.komunix.org/" ];
+      trusted-substituters = [ "https://nix-community.cachix.org" "https://cache.komunix.org/" ];
       extra-substituters = [ "https://nix-community.cachix.org" ];
       extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
       # extraOptions = ''
@@ -61,13 +63,14 @@
       interval = { Hour = 3; Minute = 15; Weekday = 6; };
     };
 
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-    };
+    # registry = {
+    #   nixpkgs.flake = inputs.nixpkgs;
+    # };
 
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"
     ];
   };
   services.nix-daemon.enable = true;
+  system.stateVersion = 5;
 }
