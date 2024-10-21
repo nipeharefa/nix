@@ -4,6 +4,9 @@ let
   shellAliases = with pkgs; {
     c = "z";
     tf = "terraform";
+    nq = "nix search";
+    e = "nvim";
+    grep = "${pkgs.ripgrep}/bin/rg";
   };
 
 in

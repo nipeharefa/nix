@@ -7,6 +7,7 @@
     clock24 = true;
     mouse = true;
     terminal = "screen-256color";
+    shell = "/bin/zsh";
     extraConfig = ''
       set -g bell-action any
       set -g mouse on

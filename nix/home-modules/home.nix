@@ -39,6 +39,7 @@ let
     envsubst
     hey
     cloudflared
+    age
 
     direnv
     hugo
