@@ -2,13 +2,12 @@
 {
   programs.tmux = {
     enable = true;
-
-    baseIndex = 1;
     clock24 = true;
     mouse = true;
     terminal = "screen-256color";
-    shell = "/bin/zsh";
     extraConfig = ''
+      set -gu default-command
+      set -g default-shell "$SHELL"
       set -g bell-action any
       set -g mouse on
       # Keep your finger on ctrl, or don't
