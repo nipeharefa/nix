@@ -1,28 +1,32 @@
 {
   description = "my darwin system";
-  outputs = inputs: inputs.parts.lib.mkFlake { inherit inputs; } {
-    systems = [
-      "aarch64-darwin"
-      "x86_64-darwin"
-      "x86_64-linux"
-    ];
+  outputs =
+    inputs:
+    inputs.parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "aarch64-darwin"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
 
-    imports = [
-      inputs.ez-configs.flakeModule
-      ./devShells.nix
-    ];
+      imports = [
+        inputs.ez-configs.flakeModule
+        ./devShells.nix
+      ];
 
-    ezConfigs = {
-      root = ./nix;
-      globalArgs = { inherit inputs; };
-      # home.users.root.importDefault = false;
-      darwin.hosts = {
-        m1pro = {
-          userHomeModules = [ "nipeharefa" ];
+      ezConfigs = {
+        root = ./nix;
+        globalArgs = {
+          inherit inputs;
+        };
+        # home.users.root.importDefault = false;
+        darwin.hosts = {
+          m1pro = {
+            userHomeModules = [ "nipeharefa" ];
+          };
         };
       };
     };
-  };
   inputs = {
 
     ## -- nixpkgs 

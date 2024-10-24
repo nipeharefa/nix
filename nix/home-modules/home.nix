@@ -1,4 +1,11 @@
-{ inputs, config, pkgs, system, lib, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  system,
+  lib,
+  ...
+}:
 
 let
 
@@ -12,7 +19,6 @@ let
     # lcov
     nodejs_20
     yarn
-
 
     # container
     qemu
@@ -54,11 +60,9 @@ let
     golangci-lint
     go-mockery
 
-
     nixpkgs-fmt
 
     terraform
-
 
     # krakend
 

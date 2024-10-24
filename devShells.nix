@@ -4,7 +4,8 @@
 { self, ... }:
 
 {
-  perSystem = { pkgs, config, ... }:
+  perSystem =
+    { pkgs, config, ... }:
     {
       devShells = {
         bun = pkgs.mkShell {
@@ -15,7 +16,7 @@
             nodejs_20
             yarn
             nodePackages.pnpm
-           ];
+          ];
         };
         flyctl = pkgs.mkShell {
           buildInputs = [ pkgs.flyctl ];

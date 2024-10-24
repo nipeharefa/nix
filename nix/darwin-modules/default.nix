@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   homebrew = {
     enable = true;
     casks = [
@@ -45,9 +46,14 @@
       fallback = true;
       trusted-users = [ "@admin" ];
       substituters = pkgs.lib.mkBefore [ "https://cache.komunix.org/" ];
-      trusted-substituters = [ "https://nix-community.cachix.org" "https://cache.komunix.org/" ];
+      trusted-substituters = [
+        "https://nix-community.cachix.org"
+        "https://cache.komunix.org/"
+      ];
       extra-substituters = [ "https://nix-community.cachix.org" ];
-      extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
       # extraOptions = ''
       #   keep-outputs = true
       #   keep-derivations = true
@@ -60,7 +66,11 @@
     gc = {
       automatic = true;
       options = "--delete-older-than 7d";
-      interval = { Hour = 3; Minute = 15; Weekday = 6; };
+      interval = {
+        Hour = 3;
+        Minute = 15;
+        Weekday = 6;
+      };
     };
 
     # registry = {

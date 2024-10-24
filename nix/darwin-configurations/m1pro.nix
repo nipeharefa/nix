@@ -7,4 +7,3 @@ in
   nixpkgs.hostPlatform = "aarch64-darwin";
   users.users.nipeharefa.home = "/Users/nipeharefa";
 }
-

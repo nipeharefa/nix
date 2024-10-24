@@ -53,7 +53,7 @@
         set clipboard=unnamedplus
         set mouse=a
         set signcolumn=yes:2
-        
+
         set relativenumber
         autocmd InsertEnter * :set number
         autocmd InsertLeave * :set relativenumber
@@ -99,7 +99,13 @@
       autosuggestion.enable = true;
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "kubectl" "golang" "docker" "history" "z"];
+        plugins = [
+          "git"
+          "kubectl"
+          "golang"
+          "docker"
+          "history"
+        ];
         theme = "robbyrussell";
       };
       initExtraBeforeCompInit = ''
