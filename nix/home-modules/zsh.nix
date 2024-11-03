@@ -8,6 +8,7 @@
     };
     starship = {
       enable = true;
+      enableZshIntegration = true;
     };
     fzf = {
       enable = true;
@@ -86,7 +87,11 @@
       enable = true;
       shellAliases = {
         tx = "tmuxinator";
-        nixgc = "nix-collect-garbage -d";
+        nix-gc = ''
+          nix-collect-garbage --delete-old;
+          sudo nix-collect-garbage --delete-old;
+          nix-store --optimize -v;
+        '';
         myip = "curl ifconfig.co";
         ip6 = "curl -6 ifconfig.co";
         cl = "clear";
@@ -105,6 +110,7 @@
           "golang"
           "docker"
           "history"
+          "z"
         ];
         theme = "robbyrussell";
       };
@@ -123,6 +129,8 @@
         bindkey '^f' fzf-history-widget
         zstyle ':completion:*:git-checkout:*' sort false
         zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+        zstyle ':fzf-tab:complete:nipe:*' fzf-preview 'eza -1 --color=always $realpath'
+        zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
       '';
     };
 
