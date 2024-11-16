@@ -59,9 +59,6 @@
         autocmd InsertEnter * :set number
         autocmd InsertLeave * :set relativenumber
 
-
-        set wildmenu
-        set wildmode=longest:full,full
         set scrolloff=8
         set sidescrolloff=8
         set updatetime=300
