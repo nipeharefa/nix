@@ -87,7 +87,10 @@ let
 
     zsh-fzf-tab
 
-    (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" "Hack"]; })
+    # (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" "Hack"]; })
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-mono
+    nerd-fonts.fira-code
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
