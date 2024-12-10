@@ -86,6 +86,8 @@ let
     git-cliff
 
     zsh-fzf-tab
+
+    (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" "Hack"]; })
   ];
 
   gitPkgs = with pkgs.gitAndTools; [

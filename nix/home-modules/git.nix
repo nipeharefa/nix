@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 let
   nipe = {
@@ -7,6 +7,7 @@ let
   };
 in
 {
+  fonts.fontconfig.enable = true;
   programs.git = {
     enable = true;
     extraConfig = {
