@@ -82,6 +82,7 @@
     };
     zsh = {
       enable = true;
+      history.size = 100000;
       shellAliases = {
         tx = "tmuxinator";
         nix-gc = ''

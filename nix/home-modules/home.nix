@@ -17,7 +17,7 @@ let
   defaultPackages = with pkgs; [
     fish
     # lcov
-    nodejs_20
+    nodejs_22
     yarn
 
     # container
