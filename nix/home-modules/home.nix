@@ -67,6 +67,7 @@ let
     # krakend
 
     kubectl
+    k9s
     kubectx
     viddy
     # buf
