@@ -66,11 +66,6 @@
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";
-      interval = {
-        Hour = 3;
-        Minute = 15;
-        Weekday = 6;
-      };
     };
 
     # registry = {

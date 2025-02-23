@@ -69,6 +69,8 @@ let
     kubectl
     k9s
     kubectx
+    kubelogin-oidc
+    
     viddy
     # buf
 
@@ -82,7 +84,10 @@ let
     gnupg
     sops
 
+    # nodejs and friend
     nodePackages.pnpm
+    bun
+    
     # zinit
     git-cliff
 
