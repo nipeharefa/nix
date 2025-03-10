@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 {
   homebrew = {
     enable = true;
@@ -76,6 +76,6 @@
       "nixpkgs=${inputs.nixpkgs}"
     ];
   };
-  services.nix-daemon.enable = true;
-  system.stateVersion = 5;
+  ids.uids.nixbld = lib.mkForce 350;
+  system.stateVersion = 4;
 }
