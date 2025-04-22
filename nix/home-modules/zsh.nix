@@ -15,29 +15,20 @@
       fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
       changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     };
-    vscode = {
-      enable = false;
-      extensions = with pkgs.vscode-marketplace; [
-        bbenoist.nix
-        bierner.markdown-mermaid
-        dbaeumer.vscode-eslint
-        eamodio.gitlens
-        esbenp.prettier-vscode
-        golang.go
-        redhat.vscode-yaml
-        asvetliakov.vscode-neovim
-        bmewburn.vscode-intelephense-client
-      ];
-      # userSettings = {
-      #   # Vim
-      #   "vim.enableNeovim" = true;
-      #   "vim.highlightedyank.enable" = true;
-
-      #   "[yaml]" = {
-      #     "editor.defaultFormatter" = "redhat.vscode-yaml";
-      #   };
-      # };
-    };
+    # vscode = {
+    #   enable = false;
+    #   extensions = with pkgs.vscode-marketplace; [
+    #     bbenoist.nix
+    #     bierner.markdown-mermaid
+    #     dbaeumer.vscode-eslint
+    #     eamodio.gitlens
+    #     esbenp.prettier-vscode
+    #     golang.go
+    #     redhat.vscode-yaml
+    #     asvetliakov.vscode-neovim
+    #     bmewburn.vscode-intelephense-client
+    #   ];
+    # };
     eza = {
       enable = true;
       enableBashIntegration = true;

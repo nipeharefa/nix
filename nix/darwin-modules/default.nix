@@ -40,15 +40,13 @@
     ];
   };
   nix = {
-    # binary-caches = [ "https://cache.komunix.org/" "https://cache.nixos.org/"];
     extraOptions = "experimental-features = nix-command flakes";
     settings = {
       fallback = true;
       trusted-users = [ "@admin" ];
-      substituters = pkgs.lib.mkBefore [ "https://cache.komunix.org/" ];
+      # substituters = pkgs.lib.mkBefore [ "https://cache.komunix.org/" ];
       trusted-substituters = [
         "https://nix-community.cachix.org"
-        "https://cache.komunix.org/"
       ];
       extra-substituters = [ "https://nix-community.cachix.org" ];
       extra-trusted-public-keys = [
@@ -67,10 +65,6 @@
       automatic = true;
       options = "--delete-older-than 30d";
     };
-
-    # registry = {
-    #   nixpkgs.flake = inputs.nixpkgs;
-    # };
 
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"
