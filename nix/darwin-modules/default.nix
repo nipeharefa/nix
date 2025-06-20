@@ -72,4 +72,5 @@
   };
   ids.uids.nixbld = lib.mkForce 350;
   system.stateVersion = 4;
+  system.primaryUser = "nipeharefa";
 }

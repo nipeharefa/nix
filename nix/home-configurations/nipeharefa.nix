@@ -5,7 +5,7 @@ in
 {
   home = {
     username = "nipeharefa";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
     homeDirectory = if isDarwin then "/Users/nipeharefa" else "/home/nipeharefa";
   };
 }

@@ -11,6 +11,11 @@
       enableZshIntegration = true;
       settings = {
         add_newline = true;
+        kubernetes = {
+          disabled = false;
+          symbol = "⎈ ";
+          # format = '[$symbol](bright-black) [$context( \($namespace\))]($style)';
+        };
       };
     };
     fzf = {
@@ -106,14 +111,12 @@
         ];
         theme = "robbyrussell";
       };
-      initExtraBeforeCompInit = ''
+      initContent = ''
         # Nix
         if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
         fi
-      '';
 
-      initExtra = ''
         source "$(fzf-share)/key-bindings.zsh"
         source "$(fzf-share)/completion.zsh"
         source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
