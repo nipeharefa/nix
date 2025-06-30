@@ -30,7 +30,11 @@ let
 
     eza
     air
+    
+    # python
     python310
+    uv
+
     yq
     jq
 
