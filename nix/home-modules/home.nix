@@ -69,6 +69,7 @@ let
     terraform
 
     # krakend
+    claude-code
 
     kubectl
     k9s
