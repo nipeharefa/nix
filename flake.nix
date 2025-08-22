@@ -12,6 +12,7 @@
       imports = [
         inputs.ez-configs.flakeModule
         ./devShells.nix
+        ./nix/overlays
       ];
 
       ezConfigs = {
