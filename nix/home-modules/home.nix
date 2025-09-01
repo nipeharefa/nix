@@ -35,7 +35,7 @@ let
     python310
     uv
 
-    yq
+    yq-go
     jq
 
     redis
@@ -66,7 +66,7 @@ let
 
     nixpkgs-fmt
 
-    terraform
+    opentofu
 
     # krakend
     claude-code
@@ -102,6 +102,13 @@ let
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-mono
     nerd-fonts.fira-code
+    
+    (google-cloud-sdk.withExtraComponents (
+      with google-cloud-sdk.components;
+      [
+        gke-gcloud-auth-plugin
+      ]
+    ))
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
