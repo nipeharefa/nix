@@ -105,15 +105,46 @@
       vimAlias = true;
       viAlias = true;
       extraLuaConfig = ''
+        local claudecode = require('claudecode')
+        local neogit = require('neogit')
+        local nvimtree = require('nvim-tree')
+        local ibl = require('ibl')
+        local webicons = require("nvim-web-devicons")
+        local wk = require("which-key")
+
+        neogit.setup({})
+        ibl.setup({})
+        nvimtree.setup({})
+        webicons.setup({})
+        claudecode.setup({})
+
         vim.g.mapleader = " "
         local keymap = vim.keymap.set
         keymap("n", "<leader>q", ":q<CR>", { desc = "Quit" })
+        keymap("n", "<leader>ac", "<cmd>ClaudeCode<cr>", { desc = "Toggle Claude" })
 
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-        vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+        vim.keymap.set('n', '<leader>fgb', builtin.git_branches, { desc = 'Branches' })
+        vim.keymap.set('n', '<leader>fgs', builtin.git_status, { desc = 'Lists current changes git per file with diff preview and add action' })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+        vim.keymap.set("n", "<leader>sc", "<C-w>c", { desc = "Close split" })
+        vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<cr>")
+
+        -- Wrap in a function to pass additional arguments
+        vim.keymap.set(
+            "n",
+            "<leader>gg",
+            function() neogit.open({ kind = "split" }) end,
+            { desc = "Open Neogit UI" }
+        )
+
+        wk.add({
+          { "<leader>f", group = "file" }, -- group
+          { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" }
+        })
+
       '';
       extraConfig = ''
         set nocompatible
@@ -132,18 +163,32 @@
         set scrolloff=8
         set sidescrolloff=8
         set updatetime=300
+        
+        map <C-j> <C-W>j
+        map <C-k> <C-W>k
+        map <C-h> <C-W>h
+        map <C-l> <C-W>l
 
-        nnoremap <C-n> :NERDTree<CR>
-        nnoremap <C-t> :NERDTreeToggle<CR>
+        set laststatus=2
       '';
       plugins = with pkgs.vimPlugins; [
         ctrlp
-        nerdtree
-        nerdtree-git-plugin
-        vim-devicons
+        # nerdtree
+        # nerdtree-git-plugin
+        # vim-devicons
         telescope-nvim
+        which-key-nvim
 
         nvim-treesitter
+        nvim-tree-lua
+
+        nvim-web-devicons
+        neogit
+        indent-blankline-nvim
+        snacks-nvim
+        claudecode-nvim
+
+        vim-go
 
         # tree-sitter-lua
         # tree-sitter-go
@@ -238,11 +283,6 @@
                 commandline -i $selected
             end
             commandline -f repaint
-          '';
-        };
-        gowi = {
-          body = ''
-            cat ${config.sops.secrets.mong.path}
           '';
         };
         kcn = {

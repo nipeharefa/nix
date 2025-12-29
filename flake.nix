@@ -13,7 +13,6 @@
         inputs.ez-configs.flakeModule
         ./devShells.nix
         ./nix/overlays
-        # inputs.mac-app-util.homeManagerModules
       ];
 
       ezConfigs = {
@@ -25,11 +24,7 @@
         darwin.hosts = {
           m1pro = {
             userHomeModules = [ "nipeharefa" ];
-            # imports = [ inputs.mac-app-util.darwinModules.default ];
           };
-          darwinModules = [
-            # inputs.mac-app-util.darwinModules.default
-          ];
         };
       };
     };

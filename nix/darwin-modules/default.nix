@@ -82,4 +82,11 @@ in
   ids.uids.nixbld = lib.mkForce 350;
   system.stateVersion = 4;
   system.primaryUser = lib.mkDefault defaultPrimaryUser;
+
+  # sops-nix configuration
+  # sops = {
+  #   defaultSopsFile = ../../secrets/secret.yaml;
+  #   gnupg.home = "/Users/${primaryUser}/.gnupg";
+  #   gnupg.sshKeyPaths = [ ];
+  # };
 }
