@@ -71,6 +71,9 @@
     fzf = {
       enable = true;
       enableFishIntegration = true;
+      defaultCommand = ''
+        ${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules
+      '';
       fileWidgetCommand = ''
         ${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules
       '';
@@ -104,48 +107,71 @@
       enable = true;
       vimAlias = true;
       viAlias = true;
-      extraLuaConfig = ''
-        local claudecode = require('claudecode')
-        local neogit = require('neogit')
-        local nvimtree = require('nvim-tree')
-        local ibl = require('ibl')
-        local webicons = require("nvim-web-devicons")
-        local wk = require("which-key")
+      extraLuaConfig =
+        let
+          plugins = with pkgs.vimPlugins; [
+            # LazyVim
+            LazyVim
+            blink-cmp
+            flash-nvim
+            bufferline-nvim
+            which-key-nvim
+            tokyonight-nvim
+            none-ls-nvim
+            noice-nvim
+            snacks-nvim
+            neo-tree-nvim
+          ];
+          mkEntryFromDrv = drv:
+          if lib.isDerivation drv then
+            { name = "${lib.getName drv}"; path = drv; }
+          else
+            drv;
+          lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
+        in ''
+          vim.g.mapleader = " "
+          local keymap = vim.keymap.set
+          -- keymap("n", "<leader>q", ":q<CR>", { desc = "Quit" })
+          -- vim.keymap.set("n", "<leader>:", ":", { desc = "Com mand mode" })
 
-        neogit.setup({})
-        ibl.setup({})
-        nvimtree.setup({})
-        webicons.setup({})
-        claudecode.setup({})
 
-        vim.g.mapleader = " "
-        local keymap = vim.keymap.set
-        keymap("n", "<leader>q", ":q<CR>", { desc = "Quit" })
-        keymap("n", "<leader>ac", "<cmd>ClaudeCode<cr>", { desc = "Toggle Claude" })
-
-        local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-        vim.keymap.set('n', '<leader>fgb', builtin.git_branches, { desc = 'Branches' })
-        vim.keymap.set('n', '<leader>fgs', builtin.git_status, { desc = 'Lists current changes git per file with diff preview and add action' })
-        vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-        vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-        vim.keymap.set("n", "<leader>sc", "<C-w>c", { desc = "Close split" })
-        vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<cr>")
-
-        -- Wrap in a function to pass additional arguments
-        vim.keymap.set(
-            "n",
-            "<leader>gg",
-            function() neogit.open({ kind = "split" }) end,
-            { desc = "Open Neogit UI" }
-        )
-
-        wk.add({
-          { "<leader>f", group = "file" }, -- group
-          { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" }
-        })
-
-      '';
+          local lazy = require('lazy')
+          lazy.setup({
+            defaults = {
+              lazy = true,
+            },
+            dev = {
+              -- reuse files from pkgs.vimPlugins.*
+              path = "${lazyPath}",
+              patterns = { "" },
+              -- fallback to download
+              fallback = true,
+            },
+            spec = {
+              { 
+                "LazyVim/LazyVim", 
+                import = "lazyvim.plugins",
+                opts = {
+                  colorscheme = "catppuccin",
+                }
+              },
+              {
+                "nvim-neo-tree/neo-tree.nvim",
+                opts = function(_, opts)
+                  opts.filesystem = opts.filesystem or {}
+                  opts.filesystem.filtered_items = {
+                    visible = true,
+                    hide_dotfiles = false,
+                    hide_gitignored = false,
+                    hide_hidden = false,
+                  }
+                end,
+              },
+              { import = "lazyvim.plugins.extras.lang.go" },
+              { import = "lazyvim.plugins.extras.lang.json" }
+            }
+          })
+        '';
       extraConfig = ''
         set nocompatible
         set nobackup
@@ -173,32 +199,7 @@
       '';
       plugins = with pkgs.vimPlugins; [
         ctrlp
-        # nerdtree
-        # nerdtree-git-plugin
-        # vim-devicons
-        telescope-nvim
-        which-key-nvim
-
-        nvim-treesitter
-        nvim-tree-lua
-
-        nvim-web-devicons
-        neogit
-        indent-blankline-nvim
-        snacks-nvim
-        claudecode-nvim
-
-        vim-go
-
-        # tree-sitter-lua
-        # tree-sitter-go
-
-        #keymap
-        # {
-        #   plugin = keymapConfig;
-        #   type = "lua";
-        #   config = builtins.readFile ../config/nvim/keymap.lua;
-        # }
+        lazy-nvim
       ];
     };
     fish = {
@@ -223,30 +224,11 @@
         ".." = "cd ..";
         "..." = "cd ../..";
 
-        # # Git workflow
-        # gs = "git status -sb";
-        # ga = "git add";
-        # gc = "git commit";
-        # gcm = "git commit -m";
-        # gca = "git commit --amend --no-edit";
-        # # gco = "git checkout";
-        # gcb = "git checkout -b";
-        # gb = "git branch";
-        # gbd = "git branch -d";
-        # gbdD = "git branch -D";
-        # gd = "git diff";
-        # gl = "git log --oneline --graph --decorate";
-        # gpl = "git pull --rebase --autostash";
-        # gps = "git push";
-        # gfa = "git fetch --all --prune";
-        # gp = "git push";
-        # gpsup = "git push --set-upstream";
-        delete-gone-branch = "git branch --verbose | grep '\[gone\]' | awk '{print $1}' | xargs git branch -D";
-
         # Tmuxinator helper
         tx = "tmuxinator";
         # terraform
         tf = "tofu";
+
       };
       plugins = [
         {
@@ -298,6 +280,59 @@
               # Direct mode with argument
               kubectl config set-context --current --namespace=$argv
             end
+          '';
+        };
+        tree = {
+          description = "";
+          body = ''
+            # Default exa options for tree view
+            set default_opts "--tree"
+            
+            # Combine default options with any user-provided arguments
+            command exa $default_opts $argv
+          '';
+        };
+        git-clean-gone = {
+          description = "";
+          body = ''
+            set mode safe
+            for arg in $argv
+                switch $arg
+                    case '--dry-run' '-n'
+                        set mode dry
+                    case '--force' '-f'
+                        set mode force
+                end
+            end
+            set gone_branches (git branch -vv | awk '/: gone]/{print $1}')
+
+            if test (count $gone_branches) -eq 0
+                echo "No local branches with deleted remotes."
+                return
+            end
+
+            echo "Branches with gone upstreams:"
+            printf "  %s\n" $gone_branches
+
+            if test $mode = dry
+                echo "(dry-run) No branches deleted."
+                return
+            end
+
+            if test $mode = force
+                git branch -D $gone_branches
+            else
+                git branch -d $gone_branches
+            end
+          '';
+        };
+        git-recent = {
+          description = "Git recent";
+          body = ''
+            git for-each-ref \
+              --sort=-committerdate \
+              --format='%(committerdate:relative)  %(refname:short)' \
+              refs/heads/
           '';
         };
         gprom = {
@@ -395,13 +430,26 @@
             end
           '';
         };
+        gwl = {
+          description = "List all git worktrees";
+          body = ''
+            git worktree list
+          '';
+        };
       };
       interactiveShellInit = ''
         set -g fish_greeting ""
+        set -g fish_pager_color_completion
+        set -g fish_pager_color_prefix
+        set -g fish_pager_color_progress
+        
         abbr -a kpf 'kubectl port-forward'
         abbr -a kdp 'kubectl describe pod'
         abbr -a kgno 'kubectl get node'
-        abbr -a k 'kubectl' 
+        abbr -a k 'kubectl'
+
+        complete -c gwd -d "Remove worktree and branch"
+        complete -c gwl -d "List all worktrees"
 
         # Completion for kcn function - autocomplete namespaces
         complete -c kcn -f -a '(kubectl get namespaces -o jsonpath="{.items[*].metadata.name}" 2>/dev/null | tr " " "\n")'
@@ -420,19 +468,5 @@
     delta
     fd
     ripgrep
-    
-    # pkgs.babelfish
-    # pkgs.fishPlugins.colored-man-pages
-    # https://github.com/franciscolourenco/done
-    # pkgs.fishPlugins.done
-    # # use babelfish than foreign-env
-    # pkgs.fishPlugins.foreign-env
-    # # https://github.com/wfxr/forgit
-    # pkgs.fishPlugins.forgit
-    # # Paired symbols in the command line
-    # pkgs.fishPlugins.pisces
-    # pkgs.fishPlugins.puffer
-    # pkgs.fishPlugins.fifc
-    # pkgs.fishPlugins.bass
   ];
 }

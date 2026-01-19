@@ -62,11 +62,13 @@ let
 
     nixpkgs-fmt
     nixpkgs-review
+    cachix
 
-    opentofu
+    # provisioning
+    opentofu ansible
 
     # vibe
-    claude-code
+    claude-code beads
 
     # kubernetes tools
     kubectl
@@ -121,6 +123,8 @@ let
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-mono
     nerd-fonts.fira-code
+
+    redpanda-connect
     
     (google-cloud-sdk.withExtraComponents (
       with google-cloud-sdk.components;
