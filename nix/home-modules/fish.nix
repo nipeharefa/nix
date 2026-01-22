@@ -121,6 +121,7 @@
             noice-nvim
             snacks-nvim
             neo-tree-nvim
+            yanky-nvim
           ];
           mkEntryFromDrv = drv:
           if lib.isDerivation drv then
@@ -151,24 +152,23 @@
               { 
                 "LazyVim/LazyVim", 
                 import = "lazyvim.plugins",
-                opts = {
-                  colorscheme = "catppuccin",
-                }
               },
               {
-                "nvim-neo-tree/neo-tree.nvim",
-                opts = function(_, opts)
-                  opts.filesystem = opts.filesystem or {}
-                  opts.filesystem.filtered_items = {
-                    visible = true,
-                    hide_dotfiles = false,
-                    hide_gitignored = false,
-                    hide_hidden = false,
-                  }
-                end,
+                "folke/tokyonight.nvim",
+                lazy = true,
+                opts = { style = "night" },
               },
               { import = "lazyvim.plugins.extras.lang.go" },
-              { import = "lazyvim.plugins.extras.lang.json" }
+              { import = "lazyvim.plugins.extras.lang.json" },
+              {
+                "folke/snacks.nvim",
+                opts = {
+                  picker = {
+                    hidden = true, -- This makes hidden files appear by default
+                    ignored = true, -- Also show .gitignore files if needed
+                  },
+                },
+              }
             }
           })
         '';
