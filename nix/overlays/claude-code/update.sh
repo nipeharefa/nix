@@ -1,5 +1,5 @@
 #!/usr/bin/env nix
-#!nix shell --ignore-environment .#cacert .#nodejs .#git .#nix-update .#nix .#gnused .#findutils .#bash --command bash
+#!nix shell --ignore-environment .#cacert .#nodejs .#git .#nix-update .#nix .#gnused .#findutils .#bash .#coreutils --command bash
 set -euo pipefail
 
 BASE_URL="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases"
@@ -10,35 +10,25 @@ PACKAGE_FILE="nix/overlays/claude-code/default.nix"
 version="$(curl -fsSL "$LATEST_URL" | tr -d '[:space:]')"
 echo "Updating claude → $version"
 
-# Platform mapping (diperbaiki syntax)
-declare -A PLAT=(
-	[aarch64 - darwin]="darwin-arm64"
-	[aarch64 - linux]="linux-arm64"
-	[x86_64 - darwin]="darwin-x64"
-	[x86_64 - linux]="linux-x64"
-)
 
-# Buat backup
-cp "$PACKAGE_FILE" "$PACKAGE_FILE.bak"
+PLAT="darwin-arm64"
+SYSTEM="aarch64-darwin"
 
-# Update versi (gunakan -i untuk in-place edit, bukan -nE)
-sed -i "s/version = \"[^\"]*\"/version = \"$version\"/" "$PACKAGE_FILE"
+URL="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/${version}/${PLAT}/claude"
 
-# Loop setiap platform dan update hash
-for system in "${!PLAT[@]}"; do
-	plat="${PLAT[$system]}"
-	url="$BASE_URL/$version/$plat/claude"
+echo "Updating hash for ${SYSTEM}"
+echo "Version: ${version}"
+echo "URL: ${URL}"
 
-	echo "Prefetching $system..."
-	hash="$(nix-prefetch-url --type sha256 "$url")"
-	hash="sha256-$hash"
+# Compute nix hash (base64, no prefix)
+RAW_HASH="$(nix-prefetch-url --type sha256 "$URL")"
+HASH="$(nix --extra-experimental-features nix-command hash convert --to sri --hash-algo sha256 ${RAW_HASH})"
 
-	echo "  $system = $hash"
+echo "New hash: $HASH"
 
-	# Gunakan -i untuk in-place edit, bukan -nE (yang hanya print)
-	sed -i "s|${system} = \"sha256-[^\"]*\"|${system} = \"$hash\"|" "$PACKAGE_FILE"
-done
+# BSD sed (macOS) requires -i ''
+sed -i '' -E \
+  's|(aarch64-darwin[[:space:]]*=[[:space:]]*")sha256-[^"]*(")|\1'"${HASH}"'\2|' \
+  "nix/overlays/claude-code/default.nix"
 
-echo "✓ Update selesai!"
-echo "Versi baru: $version"
-echo "Backup tersimpan di: $PACKAGE_FILE.bak"
+# echo "✔ aarch64-darwin hash updated successfully"
