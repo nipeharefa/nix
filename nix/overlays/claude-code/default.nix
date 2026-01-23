@@ -1,59 +1,56 @@
 {
   lib,
-  buildNpmPackage,
-  fetchzip,
-  writableTmpDirAsHomeHook,
-  versionCheckHook,
+  stdenv,
+  fetchurl,
+  versionCheckHook
 }:
-buildNpmPackage (finalAttrs: {
-  pname = "claude-code";
-  version = "2.0.37";
+let
+  version = "2.1.17";
+  inherit (stdenv.hostPlatform) system;
+  throwSystem = throw "tailwindcss has not been packaged for ${system} yet.";
+  plat =
+    {
+      aarch64-darwin = "darwin-arm64";
+      aarch64-linux = "linux-arm64";
+      x86_64-darwin = "darwin-x64";
+      x86_64-linux = "linux-x64";
+    }
+    .${system} or throwSystem;
 
-  src = fetchzip {
-    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${finalAttrs.version}.tgz";
-    hash = "sha256-x4nHkwTE6qcB2PH+WPC0VyJTGeV6VTzeiiAsiQWChoo=";
+  hash =
+    {
+      aarch64-darwin = "sha256-HYGafA7RrWJ19CzytnBBq4Ca+xzTU3xu1uYYuI5aBTE=";
+      aarch64-linux = "sha256-JkaJmEMRzCyhBKnWpNA5tCZ67PRUPcnqC7wJTusMzI0=";
+      x86_64-darwin = "sha256-YzfIcYUyHAeSRN+9nCRQKjAGQBvRU50ZzcnfjekQGEM=";
+      x86_64-linux = "sha256-h7zmljYZoFfIzPDOQ4PzdUYCc/tqsCzaR4DtGlQKqTk=";
+    }
+    .${system} or throwSystem;
+
+in
+stdenv.mkDerivation (finalAttrs: {
+  inherit version;
+  pname = "claude";
+
+   src = fetchurl {
+    url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/${version}/${plat}/claude";
+    inherit hash;
   };
 
-  npmDepsHash = "sha256-CxhMbABjSEmW4srMjFOhe6YFj7OovrPkgjyOimGSUao=";
-
-  postPatch = ''
-    cp ${./package-lock.json} package-lock.json
+  installPhase = ''
+    mkdir -p $out/bin
+    install -m755 $src $out/bin/claude
   '';
 
-  dontNpmBuild = true;
+  dontUnpack = true;
+  dontBuild = true;
+  dontStrip = true;
 
-  env.AUTHORIZED = "1";
-
-  # `claude-code` tries to auto-update by default, this disables that functionality.
-  # https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview#environment-variables
-  # The DEV=true env var causes claude to crash with `TypeError: window.WebSocket is not a constructor`
-  postInstall = ''
-    wrapProgram $out/bin/claude \
-      --set DISABLE_AUTOUPDATER 1 \
-      --unset DEV
-  '';
-
-  doInstallCheck = true;
-  nativeInstallCheckInputs = [
-    writableTmpDirAsHomeHook
-    versionCheckHook
-  ];
   versionCheckKeepEnvironment = [ "HOME" ];
-  versionCheckProgramArg = "--version";
 
   passthru.updateScript = ./update.sh;
 
-  meta = {
-    description = "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster";
-    homepage = "https://github.com/anthropics/claude-code";
-    downloadPage = "https://www.npmjs.com/package/@anthropic-ai/claude-code";
-    license = lib.licenses.unfree;
-    maintainers = with lib.maintainers; [
-      malo
-      markus1189
-      omarjatoi
-      xiaoxiangmoe
-    ];
-    mainProgram = "claude";
-  };
+  nativeInstallCheckInputs = [ versionCheckHook ];
+  doInstallCheck = true;
+  versionCheckProgram = "${placeholder "out"}/bin/claude";
+  versionCheckProgramArg = "--version";
 })

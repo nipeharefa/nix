@@ -23,7 +23,7 @@ in
     redpanda-connect = final.callPackage ./redpanda-connect/package.nix { };
   };
 
-  # flake.overlays.claude-code = final: prev: {
-  #   claude-code = prev.callPackage ./claude-code/default.nix { };
-  # };
+  flake.overlays.claude-code = final: prev: {
+    claude-code = prev.callPackage ./claude-code/default.nix { };
+  };
 }
