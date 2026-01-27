@@ -11,17 +11,17 @@
 
 buildGoModule (finalAttrs: {
   pname = "beads";
-  version = "0.47.1";
+  version = "0.49.0";
 
   src = fetchFromGitHub {
     owner = "steveyegge";
     repo = "beads";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-uc+3IK6CKmXx82WobEnb4Lin2EG2VLcbIJdq0H5U3Xc=";
+    hash = "sha256-m0gVLeWfFeaWZpARuXgP00npmZcO7XCm7mXWA52bqTc=";
   };
 
   # vendorHash = "";
-  vendorHash = "sha256-BpACCjVk0V5oQ5YyZRv9wC/RfHw4iikc2yrejZzD1YU=";
+  vendorHash = "sha256-YU+bRLVlWtHzJ1QPzcKJ70f+ynp8lMoIeFlm+29BNPE=";
 
   subPackages = [ "cmd/bd" ];
 
@@ -39,9 +39,15 @@ buildGoModule (finalAttrs: {
   ];
 
   # Skip security tests on Darwin - they check for /etc/passwd which isn't available in sandbox
-  checkFlags = lib.optionals stdenv.hostPlatform.isDarwin [
-    "-skip=TestCleanupMergeArtifacts_CommandInjectionPrevention"
-  ];
+  checkFlags =
+    [
+      "-run"
+      "^(?!TestDaemonAutostart_StartDaemonProcess_Stubbed$)"
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [
+      "-run"
+      "^(?!TestCleanupMergeArtifacts_CommandInjectionPrevention$)"
+    ];
 
   preCheck = ''
     export PATH="$out/bin:$PATH"

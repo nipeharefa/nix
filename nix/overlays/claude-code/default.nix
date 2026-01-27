@@ -5,7 +5,7 @@
   versionCheckHook
 }:
 let
-  version = "2.1.17";
+  version = "2.1.19";
   inherit (stdenv.hostPlatform) system;
   throwSystem = throw "tailwindcss has not been packaged for ${system} yet.";
   plat =
@@ -19,7 +19,7 @@ let
 
   hash =
     {
-      aarch64-darwin = "sha256-HYGafA7RrWJ19CzytnBBq4Ca+xzTU3xu1uYYuI5aBTE=";
+      aarch64-darwin = "sha256-04asj20UefhdMfNpQhyCQTXBAknDIIcBfQWl9CiFLEE=";
       aarch64-linux = "sha256-JkaJmEMRzCyhBKnWpNA5tCZ67PRUPcnqC7wJTusMzI0=";
       x86_64-darwin = "sha256-YzfIcYUyHAeSRN+9nCRQKjAGQBvRU50ZzcnfjekQGEM=";
       x86_64-linux = "sha256-h7zmljYZoFfIzPDOQ4PzdUYCc/tqsCzaR4DtGlQKqTk=";
