@@ -85,20 +85,6 @@
       enable = true;
       enableFishIntegration = true;
     };
-    # vscode = {
-    #   enable = false;
-    #   extensions = with pkgs.vscode-marketplace; [
-    #     bbenoist.nix
-    #     bierner.markdown-mermaid
-    #     dbaeumer.vscode-eslint
-    #     eamodio.gitlens
-    #     esbenp.prettier-vscode
-    #     golang.go
-    #     redhat.vscode-yaml
-    #     asvetliakov.vscode-neovim
-    #     bmewburn.vscode-intelephense-client
-    #   ];
-    # };
     eza = {
       enable = true;
       enableFishIntegration = true;
@@ -107,7 +93,7 @@
       enable = true;
       vimAlias = true;
       viAlias = true;
-      extraLuaConfig =
+      initLua =
         let
           plugins = with pkgs.vimPlugins; [
             # LazyVim

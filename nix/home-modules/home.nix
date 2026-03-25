@@ -38,7 +38,7 @@ let
 
     # awscli2
     fzy
-    neofetch
+    fastfetch
     tmuxinator
     tmux
 
@@ -119,6 +119,8 @@ let
     opentofu
 
     mkcert
+    
+    bitwarden-cli
 
     # (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" "Hack"]; })
     nerd-fonts.jetbrains-mono
