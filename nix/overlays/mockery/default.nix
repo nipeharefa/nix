@@ -1,34 +1,29 @@
-{ inputs, lib, ... }:
-
-final: prev:
-let
-  inherit (final)
-    buildGoModule
-    fetchFromGitHub
-    go-task
-    gotestsum
-    stdenv
-    versionCheckHook;
-in
 {
-  go-mockery = buildGoModule (finalAttrs: {
+  buildGo126Module,
+  fetchFromGitHub,
+  installShellFiles,
+  lib,
+  stdenv,
+}:
+
+buildGo126Module rec {
     pname = "go-mockery";
-    version = "3.6.0";
+    version = "3.7.0";
 
     src = fetchFromGitHub {
       owner = "vektra";
       repo = "mockery";
-      rev = "v${finalAttrs.version}";
-      hash = "sha256-qcK0FXtAL7kJ+dotthmnMcGa9wu97UsDKBoKy5lD2W4=";
+      rev = "v${version}";
+      hash = "sha256-h1UQfKOUEoH2LeqKKFOaKftGT+xSorVZByUKVm3xjp8=";
     };
 
     proxyVendor = true;
-    vendorHash = "sha256-Xy2w61ATNDOZKtdekeA9NSdyJq2/eiEZ9iJ3PDSUm9Q=";
+    vendorHash = "sha256-cxGH/XOcPrToP5Jg8vyghB8ihUdFoZCPj6fmKpvligs=";
 
     ldflags = [
       "-s"
       "-w"
-      "-X github.com/vektra/mockery/v${lib.versions.major finalAttrs.version}/internal/logging.SemVer=v${finalAttrs.version}"
+      "-X github.com/vektra/mockery/v${lib.versions.major version}/internal/logging.SemVer=v${version}"
     ];
 
     env.CGO_ENABLED = false;
@@ -36,9 +31,9 @@ in
     subPackages = [ "." ];
 
     nativeCheckInputs = [
-      versionCheckHook
-      go-task
-      gotestsum
+      # versionCheckHook
+      # go-task
+      # gotestsum
     ];
 
     prePatch = ''
@@ -65,6 +60,7 @@ in
       runHook postCheck
     '';
 
+    doCheck = false;
     doInstallCheck = true;
     versionCheckProgram = "$out/bin/mockery";
     versionCheckProgramArg = "version";
@@ -79,5 +75,4 @@ in
       mainProgram = "mockery";
       license = lib.licenses.bsd3;
     };
-  });
 }

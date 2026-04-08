@@ -68,7 +68,7 @@ let
     opentofu ansible
 
     # vibe
-    claude-code beads
+    claude-code beads rtk
 
     # kubernetes tools
     kubectl

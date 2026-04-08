@@ -1,13 +1,12 @@
 { inputs, ... }:
 
 let
-  goMockeryOverlay = import ./mockery/default.nix {
-    inherit inputs;
-    lib = inputs.nixpkgs.lib;
-  };
+  goMockeryOverlay = 1;
 in
 {
-  # flake.overlays.go-mockery = goMockeryOverlay;
+  flake.overlays.go-mockery =  final: prev: {
+    go-mockery = final.callPackage ./mockery/default.nix { };
+  };
 
   flake.overlays.cliproxyapi = final: prev: {
     cliproxyapi = final.callPackage ./cliproxyapi/default.nix { };
