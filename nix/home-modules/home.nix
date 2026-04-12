@@ -99,7 +99,8 @@ let
     sops
 
     # nodejs and friend
-    nodePackages.pnpm
+    # nodePackages.pnpm
+    pnpm_9
     bun
     
     # zinit

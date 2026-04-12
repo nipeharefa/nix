@@ -47,13 +47,18 @@ in
     settings = {
       fallback = true;
       trusted-users = [ "@admin" ];
-      # substituters = pkgs.lib.mkBefore [ "https://cache.komunix.org/" ];
       trusted-substituters = [
         "https://nix-community.cachix.org"
       ];
-      extra-substituters = [ "https://nix-community.cachix.org" ];
+      extra-substituters = [ 
+        "https://nix-community.cachix.org" 
+        "https://cache.clan.lol" 
+        "https://mtech.cachix.org"
+      ];
       extra-trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28="
+        "mtech.cachix.org-1:cPDMKB6bI2DjpXfsE8dOcYOdaas9afdRNhLA0MEfXuo="
       ];
       # extraOptions = ''
       #   keep-outputs = true
