@@ -46,7 +46,7 @@ in
     extraOptions = "experimental-features = nix-command flakes";
     settings = {
       fallback = true;
-      trusted-users = [ "@admin" ];
+      trusted-users = [ "nipeharefa" "@admin" ];
       trusted-substituters = [
         "https://nix-community.cachix.org"
       ];
