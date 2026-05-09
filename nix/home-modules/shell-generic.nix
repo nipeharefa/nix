@@ -18,6 +18,7 @@ in
     sessionVariables = {
       EDITOR = "nvim";
       USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
+      GOROOT = "${pkgs.go_1_26}/share/go";
     };
   };
 
@@ -42,21 +43,6 @@ in
     };
   };
 
-  # sops = {
-  #   enable = true;
-  # };
-  # sops.gnupg.home = "~/.gnupg";
-  # sops.defaultSopsFormat = "yaml";
-  # sops.gnupg.sshKeyPaths = [ ];
-  # sops.defaultSopsFile = "${../secrets/secret.yaml}";
-  # sops.secrets = {
-  #   openai_api_key = {
-  #     key = "openai_api_key";
-  #   };
-  #   mong = {
-  #     key = "mong";
-  #   };
-  # };
   sops = {
     # enable = true;
     # defaultSopsFile

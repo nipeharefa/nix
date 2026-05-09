@@ -56,7 +56,7 @@ let
     rustup
 
     # Golang tools
-    go_1_25 gopls gotools wire
+    go_1_26 gopls wire
     golangci-lint go-mockery cliproxyapi
     genkit-cli
 
@@ -68,7 +68,7 @@ let
     opentofu ansible
 
     # vibe
-    claude-code beads rtk
+    claude-code beads rtk opencode
 
     # kubernetes tools
     kubectl

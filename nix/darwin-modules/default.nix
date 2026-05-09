@@ -5,7 +5,10 @@ let
 in
 {
   homebrew = {
-    enable = true;
+    onActivation = {
+      autoUpdate = false;
+    };
+    enable = false;
     casks = [
       "dbeaver-community"
       "gather"

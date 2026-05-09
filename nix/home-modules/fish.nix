@@ -93,6 +93,8 @@
       enable = true;
       vimAlias = true;
       viAlias = true;
+      withRuby = false;
+      withPython3 = false;
       initLua =
         let
           plugins = with pkgs.vimPlugins; [
