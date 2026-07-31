@@ -73,7 +73,11 @@ in
     ];
   };
 
-  home.file.".ssh/allowed_signers".text = ''
-    me@nipeharefa.dev namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZPQuDCC7n1bXtV3vahNSxliOZPBbnUCf+7DqvQTanO me@nipeharefa.dev
-  '';
+  home.file.".ssh/allowed_signers" = {
+    force = true;
+    text = ''
+      me@nipeharefa.dev namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZPQuDCC7n1bXtV3vahNSxliOZPBbnUCf+7DqvQTanO me@nipeharefa.dev
+      nipeharefa@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZPQuDCC7n1bXtV3vahNSxliOZPBbnUCf+7DqvQTanO nipeharefa@gmail.com
+    '';
+  };
 }
