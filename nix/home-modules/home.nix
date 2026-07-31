@@ -14,10 +14,25 @@ let
     yubioath-desktop # yubikey OTP manager (gui)
   ];
 
+   mkSopsCmd = name: secretPath:
+    pkgs.writeShellScriptBin name ''
+      # export SOPS_CONFIG="$HOME/dotfiles/.sops.yaml"
+
+      exec ${pkgs.sops}/bin/sops -d "$HOME/secrets/${secretPath}"
+    '';
+
+
+  ai = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+    claude-code
+    opencode
+    rtk
+  ];
+  
   defaultPackages = with pkgs; [
+    (mkSopsCmd "get_home_password" "home-password.yaml")
     # fish
     # lcov
-    nodejs_22
+    nodejs_24
     yarn
 
     # neovim
@@ -53,12 +68,12 @@ let
 
     # Compilers
     # rustc
-    rustup
+    # rustup
 
     # Golang tools
-    go_1_26 gopls wire
-    golangci-lint go-mockery cliproxyapi
-    genkit-cli
+    go_1_26 gopls
+    golangci-lint go-mockery
+    # genkit-cli
 
     nixpkgs-fmt
     nixpkgs-review
@@ -68,7 +83,7 @@ let
     opentofu ansible
 
     # vibe
-    claude-code beads rtk opencode
+    # claude-code beads rtk opencode
 
     # kubernetes tools
     kubectl
@@ -77,21 +92,17 @@ let
     kubectx
     kubelogin-oidc
     
-    
-    # ffmpeg
-    ffmpeg_6-headless
-    
     viddy
     # buf
 
     # mac
     cocoapods
 
-    cargo-tauri
+    # cargo-tauri
     # pnpm
     # sonar-scanner-cli
     # container
-    qemu
+    # qemu
     docker
     docker-compose
     colima
@@ -100,7 +111,7 @@ let
 
     # nodejs and friend
     # nodePackages.pnpm
-    pnpm_9
+    pnpm_10
     bun
     
     # zinit
@@ -128,7 +139,9 @@ let
     nerd-fonts.fira-mono
     nerd-fonts.fira-code
 
-    redpanda-connect
+    multica-cli
+
+    # redpanda-connect
     
     (google-cloud-sdk.withExtraComponents (
       with google-cloud-sdk.components;
@@ -137,16 +150,7 @@ let
       ]
     ))
   ];
-
-  # gitPkgs = with pkgs.gitAndTools; [
-  #   diff-so-fancy # git diff with colors
-  #   git-crypt # git files encryption
-  #   # hub           # github command-line client
-  #   tig # diff and commit view
-  #   git-extras
-  # ];
 in
 {
-
-  home.packages = defaultPackages;
+  home.packages = defaultPackages ++ ai;
 }

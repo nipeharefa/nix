@@ -18,7 +18,7 @@ in
     sessionVariables = {
       EDITOR = "nvim";
       USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
-      GOROOT = "${pkgs.go_1_26}/share/go";
+      # GOROOT = "${pkgs.go_1_26}/share/go";
     };
   };
 
@@ -46,7 +46,7 @@ in
   sops = {
     # enable = true;
     # defaultSopsFile
-    defaultSopsFile = "${../secrets/secret.yaml}";
+    defaultSopsFile = "${../secrets/secret.enc.yaml}";
     gnupg = {
       home = "~/.gnupg";
     };
@@ -54,6 +54,12 @@ in
       key = "openai_api_key";
       # neededForUsers = true;
       path = "${config.home.homeDirectory}/.ssh/mong";
+    };
+    secrets."happy/smt" = {
+      # key = "happy.smt";
+      # neededForUsers = true;
+      mode = "0600";
+      path = "${config.home.homeDirectory}/.ssh/hs";
     };
     # secrets."ssh_configd/cerebre" = {
     #   path = "${config.home.homeDirectory}/.ssh/aa";

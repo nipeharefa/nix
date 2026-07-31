@@ -74,10 +74,10 @@
       defaultCommand = ''
         ${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules
       '';
-      fileWidgetCommand = ''
+      fileWidget.command = ''
         ${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules
       '';
-      changeDirWidgetCommand = ''
+      changeDirWidget.command = ''
         ${pkgs.fd}/bin/fd --type d --hidden --exclude .git --exclude node_modules
       '';
     };

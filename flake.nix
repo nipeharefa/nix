@@ -12,7 +12,8 @@
       imports = [
         inputs.ez-configs.flakeModule
         ./devShells.nix
-        ./nix/overlays
+        # ./nix/overlays
+        # inputs.llm-agents.overlays.default
       ];
 
       ezConfigs = {
@@ -62,6 +63,8 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.flake-parts.follows = "parts";
+    
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
   };
 }
