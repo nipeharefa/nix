@@ -9,6 +9,11 @@ in
 {
   programs.git = {
     enable = true;
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/id_ed25519_nipe";
+      signByDefault = true;
+    };
     settings = {
       user = {
         name = "Nipe";
@@ -26,6 +31,9 @@ in
       };
       fetch = {
         prune = true;
+      };
+      gpg = {
+        ssh.allowedSignersFile = "~/.ssh/allowed_signers";
       };
       url = {
         "ssh://git@github.com/".insteadOf = [
@@ -64,4 +72,8 @@ in
       }
     ];
   };
+
+  home.file.".ssh/allowed_signers".text = ''
+    me@nipeharefa.dev namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZPQuDCC7n1bXtV3vahNSxliOZPBbnUCf+7DqvQTanO me@nipeharefa.dev
+  '';
 }
