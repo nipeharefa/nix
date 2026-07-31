@@ -11,11 +11,17 @@
     lib.attrValues {
       inherit (ezModules)
         awscli
+        fish
+        fonts
+        fzf
         git
         home
+        neovim
+        shell
         shell-generic
+        sops
+        starship
         tmux
-        fish
         ;
     }
     ++ [
@@ -24,7 +30,6 @@
         { ... }:
         {
           home.shell.enableFishIntegration = true;
-          home.sessionVariables.EDITOR = "nvim";
         }
       )
     ];
@@ -40,10 +45,6 @@
       tarball-ttl = 0;
       contentAddressedByDefault = false;
     };
-
-    overlays = lib.attrValues inputs.self.overlays ++ [
-      # inputs.ocaml-overlay.overlays.default
-    ];
   };
   # xdg.configFile."nixpkgs/config.nix".source = ../nixpkgs-config.nix;
   programs.home-manager.enable = true;

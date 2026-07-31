@@ -13,9 +13,9 @@
         };
         fe = pkgs.mkShell {
           buildInputs = with pkgs; [
-            nodejs_20
+            nodejs_24
             yarn
-            nodePackages.pnpm
+            pnpm_10
           ];
         };
         flyctl = pkgs.mkShell {
@@ -38,8 +38,8 @@
         };
         rails = pkgs.mkShell {
           buildInputs = with pkgs; [
-            ruby_3_2
-            postgresql_12
+            ruby_3_4
+            postgresql_17
             gnumake
             gsl
             libxml2
@@ -49,10 +49,10 @@
         php = pkgs.mkShell {
           buildInputs = with pkgs; [
             php83
-            composer
-            php83Packages.phpstan
+            php83Packages.composer
+            phpstan
             php83Packages.php-cs-fixer
-            php83Packages.phpunit
+            phpunit
           ];
           shellHook = ''
             echo "PHP dev shell ready (php $(php -v | head -n1))"

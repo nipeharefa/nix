@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 let
   nipe = {
@@ -7,16 +7,25 @@ let
   };
 in
 {
-  fonts.fontconfig.enable = true;
   programs.git = {
     enable = true;
     settings = {
+      user = {
+        name = "Nipe";
+        email = "me@nipeharefa.dev";
+      };
       init = {
         defaultBranch = "main";
       };
       push = {
         default = "upstream";
         autoSetupRemote = true;
+      };
+      pull = {
+        rebase = true;
+      };
+      fetch = {
+        prune = true;
       };
       url = {
         "ssh://git@github.com/".insteadOf = [
@@ -27,12 +36,6 @@ in
         "https://bitbucket.org/".insteadOf = [
           "bitbucket:"
         ];
-      };
-      extraConfig = {
-        commit.gpgSign = true;
-        pull.rebase = true;
-        gpg.program = "gpg";
-        fetch.prune = true;
       };
       aliases = {
         branches = "branch --sort=-committerdate --format='%(HEAD)%(color:yellow) %(refname:short) | %(color:bold red)%(committername) | %(color:bold green)%(committerdate:relative) | %(color:blue)%(subject)%(color:reset)' --color=always";

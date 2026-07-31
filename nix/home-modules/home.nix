@@ -36,7 +36,7 @@ let
     yarn
 
     # neovim
-    vim
+    # vim
 
     eza
     air
@@ -127,8 +127,6 @@ let
     # gpg
     gnupg
     pinentry_mac
-
-    opentofu
 
     mkcert
     

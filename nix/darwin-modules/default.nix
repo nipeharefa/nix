@@ -54,7 +54,6 @@ in
         "https://nix-community.cachix.org"
       ];
       extra-substituters = [ 
-        "https://nix-community.cachix.org" 
         "https://cache.clan.lol" 
         "https://mtech.cachix.org"
         "https://cache.numtide.com"
