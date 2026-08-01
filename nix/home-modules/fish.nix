@@ -148,16 +148,16 @@
           git pull --rebase origin $default_branch
         '';
       };
-      zi = {
-        description = "Interactive zoxide jump";
+      zpi = {
+        description = "Interactive zoxide jump with eza preview";
         body = ''
           if not command -sq zoxide
             echo "zoxide not found" >&2
             return 127
           end
-          set -l target (command zoxide query -l | ${pkgs.fzf}/bin/fzf --height=40% --reverse --prompt 'Zoxide> ' --preview 'ls -a {}' --preview-window=down,60%)
+          set -l target (command zoxide query -l | ${pkgs.fzf}/bin/fzf --height=60% --reverse --prompt 'Zoxide> ' --preview 'eza -a -l --color=always --group-directories-first {}' --preview-window=down,60%)
           if test -n "$target"
-            cd $target
+            builtin cd $target
           end
         '';
       };
@@ -166,7 +166,7 @@
         body = ''
           set -l preview "cat {}"
           if command -sq bat
-            set preview "bat --style=numbers --color=always {}"
+            set preview "bat --style=numbers --color=always --paging=never {}"
           end
           set -l file (${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules | ${pkgs.fzf}/bin/fzf --height=60% --reverse --preview $preview --preview-window=right,60%,wrap)
           if test -n "$file"
@@ -177,7 +177,7 @@
       cz = {
         description = "fzf search directory (skip .git/node_modules)";
         body = ''
-          set -l dir (${pkgs.fd}/bin/fd --type d --hidden --exclude .git --exclude node_modules | ${pkgs.fzf}/bin/fzf --height=60% --reverse --preview 'ls -a {}' --preview-window=right,50%)
+          set -l dir (${pkgs.fd}/bin/fd --type d --hidden --exclude .git --exclude node_modules | ${pkgs.fzf}/bin/fzf --height=60% --reverse --preview 'eza -a -l --color=always --group-directories-first {}' --preview-window=right,50%)
           if test -n "$dir"
             cd $dir
           end
@@ -210,7 +210,7 @@
 
           set -l target (${pkgs.fd}/bin/fd --type d --hidden --exclude .git --exclude node_modules \
             | ${pkgs.fzf}/bin/fzf --height=60% --reverse --prompt 'Directories> ' \
-                --preview 'ls -a {}' --preview-window=right,60%)
+                --preview 'eza -a -l --color=always --group-directories-first {}' --preview-window=right,60%)
 
           if test -n "$target"
             builtin cd $target
@@ -218,13 +218,26 @@
         '';
       };
       cd = {
-        description = "cd with optional fzf preview";
+        description = "cd; no args jumps via zoxide frecency (with preview), falls back to directory picker";
         body = ''
-          if test (count $argv) -eq 0
-            __cd_fzf
-          else
+          if test (count $argv) -gt 0
             builtin cd $argv
+            return
           end
+
+          if command -sq zoxide
+            set -l dirs (command zoxide query -l 2>/dev/null)
+            if test -n "$dirs"
+              set -l target (printf '%s\n' $dirs | ${pkgs.fzf}/bin/fzf --height=60% --reverse --prompt 'Zoxide> ' \
+                --preview 'eza -a -l --color=always --group-directories-first {}' --preview-window=right,60%)
+              if test -n "$target"
+                builtin cd $target
+              end
+              return
+            end
+          end
+
+          __cd_fzf
         '';
       };
       gwl = {
