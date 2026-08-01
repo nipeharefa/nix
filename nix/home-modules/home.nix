@@ -55,7 +55,6 @@ let
     fzy
     fastfetch
     tmuxinator
-    tmux
 
     envsubst
     hey

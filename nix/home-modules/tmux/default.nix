@@ -2,6 +2,18 @@
 {
   programs.tmux = {
     enable = true;
+    # Pin tmux 3.6b: tmux 3.7's synchronized-output (DECSET 2026) engine makes
+    # opencode's full-TUI streaming lag inside tmux on macOS arm64
+    # (https://github.com/anomalyco/opencode/issues/34782). Remove once fixed.
+    package = pkgs.tmux.overrideAttrs (old: {
+      version = "3.6b";
+      src = pkgs.fetchFromGitHub {
+        owner = "tmux";
+        repo = "tmux";
+        rev = "3.6b";
+        sha256 = "1xvan4wi7ymynh3kgjnpr7zmy1fgllp0yf92jdarqmjjxky0lvl9";
+      };
+    });
     clock24 = true;
     mouse = true;
     terminal = "screen-256color";
