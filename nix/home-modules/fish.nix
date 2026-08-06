@@ -183,12 +183,24 @@
           end
         '';
       };
-      nix-dev-php = {
-        description = "Enter the PHP dev shell from anywhere";
+      dev = {
+        description = "Enter a devShell from this flake (e.g. dev rust, dev php)";
         body = ''
+          if test (count $argv) -eq 0
+            if not set -q dev_shells
+              set -g dev_shells rust bun fe flyctl swagger gcloud rails php
+            end
+            set -l picked (printf '%s\n' $dev_shells | ${pkgs.fzf}/bin/fzf --height=40% --reverse --prompt='devShell> ')
+            if test -z "$picked"
+              return 1
+            end
+            nix develop ~/.config/nixpkgs#"$picked"
+            return $status
+          end
+          set -l shell_name $argv[1]
           set -l repo ~/.config/nixpkgs
-          if test (count $argv) -ge 1
-            set repo $argv[1]
+          if test (count $argv) -ge 2
+            set repo $argv[2]
           end
           if command -sq realpath
             set repo (realpath $repo)
@@ -197,7 +209,7 @@
             echo "Repository not found: $repo" >&2
             return 1
           end
-          nix develop "$repo#php"
+          nix develop "$repo#$shell_name"
         '';
       };
       __cd_fzf = {
@@ -260,6 +272,10 @@
 
       complete -c gwd -d "Remove worktree and branch"
       complete -c gwl -d "List all worktrees"
+
+      # Completion for dev function - list available devShells
+      set -g dev_shells rust bun fe flyctl swagger gcloud rails php
+      complete -c dev -a '$dev_shells' -d 'devShells'
 
       # Completion for kcn function - autocomplete namespaces
       complete -c kcn -f -a '(kubectl get namespaces -o jsonpath="{.items[*].metadata.name}" 2>/dev/null | tr " " "\n")'
