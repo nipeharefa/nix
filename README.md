@@ -5,30 +5,26 @@
 ./bin/rebuild other-host  # override host name
 ```
 
-## Known workarounds
+## DevShells
 
-### tmux pinned to 3.6b (opencode TUI streaming lag)
+Enter a toolchain shell with `nix develop .#<name>` or the `dev` fish function:
 
-tmux >= 3.7 introduced a synchronized-output (DECSET 2026) engine. When
-opencode's full TUI streams a response inside tmux on macOS arm64, that engine
-introduces heavy lag (screen freezes until the response finishes). Outside
-tmux (direct iTerm2) it is smooth.
+```
+dev rust       # rustc, cargo, rustfmt, clippy, rust-analyzer
+dev php        # php 8.3 + composer/phpstan/php-cs-fixer
+dev rails      # ruby 3.4 + postgres 17
+dev gcloud     # gcloud + gke-gcloud-auth-plugin
+dev fe         # node 24 + yarn + pnpm 10
+dev bun
+dev flyctl
+dev swagger
+```
 
-- Upstream bug: https://github.com/anomalyco/opencode/issues/34782
-  (tmux 3.7 + macOS arm64 → opencode TUI broken; fix = downgrade to 3.6b)
-- Related: tmux 3.7b CHANGES — "Fix so that the end of a synchronized update
-  again triggers a redraw" (3.7a→3.7b), showing the sync redraw path was flaky
-  across the whole 3.7 line.
+Existing shells live under `devShells.nix`; add a new one by adding a block
+there and one word to the `dev` completions in `nix/home-modules/fish.nix`.
 
-`programs.tmux.package` in `nix/home-modules/tmux/default.nix` pins tmux to
-3.6b. Remove the override once tmux/opencode ships a fix.
+## Decisions
 
-## Optional development shells
-
-- PHP toolchain (install on-demand):
-
-  ```
-  nix develop .#php
-  ```
-
-- Existing shells live under `devShells.nix` (e.g. `.#rails`, `.#gcloud`).
+- Host/user/module terminology — see [CONTEXT.md](CONTEXT.md).
+- tmux pinned to 3.6b (opencode TUI lag) — see
+  [docs/adr/0001-pin-tmux-3-6b.md](docs/adr/0001-pin-tmux-3-6b.md).
