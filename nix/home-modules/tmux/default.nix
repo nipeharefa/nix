@@ -28,7 +28,7 @@
       set -g default-shell "$SHELL"
       set -g bell-action any
       set -g mouse on
-      set -g focus-events on
+      set -g focus-events off
       set -g status-keys vi
       set -g mode-keys vi
       
@@ -122,7 +122,7 @@
       set -g visual-activity off
       
       # Aggressive resize
-      set -g aggressive-resize on
+      set -g aggressive-resize off
       
       # Don't exit from tmux when closing a session
       set -g detach-on-destroy off
