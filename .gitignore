@@ -1,2 +1,2 @@
-result
-secrets.yaml
+/result
+/nix/secrets/secrets.yaml

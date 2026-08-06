@@ -1,11 +1,4 @@
 { ... }:
-
-let
-  nipe = {
-    name = "Nipe";
-    email = "me@nipeharefa.dev";
-  };
-in
 {
   programs.git = {
     enable = true;
@@ -48,29 +41,10 @@ in
       aliases = {
         branches = "branch --sort=-committerdate --format='%(HEAD)%(color:yellow) %(refname:short) | %(color:bold red)%(committername) | %(color:bold green)%(committerdate:relative) | %(color:blue)%(subject)%(color:reset)' --color=always";
         bs = "branches";
-        update = "pull --rebase origin git_main_branch";
         can = "commit --amend --no-edit";
         recent = "branch --sort=-committerdate --format=\'%(committerdate:relative)%09%(refname:short)\'";
       };
     };
-    # ignores = [
-    #   ".#*"
-    #   ".DS_Store"
-    #   ".dir-locals.el"
-    #   ".direnv/"
-    #   ".idea/"
-    #   ".vscode/"
-    #   ".clj-kondo/"
-    #   ".lsp/"
-    #   "*.iml"
-    #   ".zed/"
-    # ];
-    includes = [
-      {
-        condition = "gitdir:~/projects/gowi";
-        contents.user = nipe;
-      }
-    ];
   };
 
   home.file.".ssh/allowed_signers" = {
