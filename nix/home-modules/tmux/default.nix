@@ -70,6 +70,10 @@
       
       # Quick reload
       bind r source-file ~/.config/tmux/tmux.conf \; display "Configuration reloaded!"
+
+      # Reset terminal mouse state (iTerm2 corrupts it after sleep/long use;
+      # toggle mouse off/on to renegotiate with the terminal)
+      bind C-r run-shell "tmux set -g mouse off; tmux set -g mouse on"
       
       # Session management
       bind S choose-tree -s

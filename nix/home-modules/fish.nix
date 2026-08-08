@@ -212,6 +212,12 @@
           nix develop "$repo#$shell_name"
         '';
       };
+      treset = {
+        description = "Reset iTerm2 mouse state after sleep: reattach to the gowi tmux session";
+        body = ''
+          tmux attach -t gowi
+        '';
+      };
       __cd_fzf = {
         description = "FZF-assisted directory picker";
         body = ''
