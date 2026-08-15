@@ -8,20 +8,18 @@ in
     onActivation = {
       autoUpdate = false;
     };
-    enable = false;
+    enable = true;
+    enableFishIntegration = true;
     casks = [
       "dbeaver-community"
-      "gather"
       "pritunl"
       "google-chrome"
       "spotify"
       "visual-studio-code"
       "steam"
       "telegram"
-      "microsoft-edge"
       "discord"
       "slack"
-      "zulu"
       "android-studio"
       "tailscale-app"
       "brave-browser"
