@@ -5,8 +5,9 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   cat <<'USAGE'
 Usage: rebuild [host]
 
-Runs darwin-rebuild for the given host (default: m1pro) and
-updates the nipeharefa home-manager profile if the CLI is available.
+Rebuilds the darwin host (default: m1pro) with sudo (nix-darwin now
+requires root for switch) and updates the nipeharefa home-manager
+profile as the invoking user (never as root).
 USAGE
   exit 0
 fi
@@ -14,12 +15,20 @@ fi
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 host="${1:-m1pro}"
 
-echo "==> Rebuilding darwin host: ${host}"
-darwin-rebuild switch --flake "${repo_root}#${host}"
+run_as_user() {
+  if [[ $(id -u) -eq 0 ]]; then
+    sudo -u "${SUDO_USER:-nipeharefa}" --set-home -- "$@"
+  else
+    "$@"
+  fi
+}
 
-if command -v home-manager >/dev/null 2>&1; then
-  echo "==> Updating home-manager profile"
-  home-manager switch --flake "${repo_root}#nipeharefa"
+echo "==> Rebuilding darwin host: ${host}"
+if [[ $(id -u) -eq 0 ]]; then
+  darwin-rebuild switch --flake "${repo_root}#${host}"
 else
-  echo "==> home-manager CLI not found; skipping user profile update"
+  sudo darwin-rebuild switch --flake "${repo_root}#${host}"
 fi
+
+echo "==> Updating home-manager profile"
+run_as_user home-manager switch --flake "${repo_root}#nipeharefa"
