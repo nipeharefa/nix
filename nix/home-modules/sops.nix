@@ -13,5 +13,9 @@
       mode = "0600";
       path = "${config.home.homeDirectory}/.ssh/hs";
     };
+    secrets."opencode_otlp_endpoint" = {
+      mode = "0400";
+      path = "${config.home.homeDirectory}/.config/sops-nix/opencode_otlp_endpoint";
+    };
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.fish = {
     enable = true;
@@ -271,6 +271,10 @@
       set -g fish_pager_color_prefix
       set -g fish_pager_color_progress
       
+      set -gx OPENCODE_ENABLE_TELEMETRY 1
+      set -gx OPENCODE_OTLP_PROTOCOL "http/protobuf"
+      set -gx OPENCODE_OTLP_ENDPOINT (cat ${config.sops.secrets.opencode_otlp_endpoint.path})
+
       abbr -a kpf 'kubectl port-forward'
       abbr -a kdp 'kubectl describe pod'
       abbr -a kgno 'kubectl get node'
