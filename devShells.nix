@@ -51,7 +51,7 @@
       phpunit
     ];
     shellHook = ''
-      echo "PHP dev shell ready (php $(php -v | head -n1))"
+      echo "PHP dev shell ready (php ${pkgs.php83.version})"
     '';
   };
   rust = pkgs.mkShell {
@@ -61,6 +61,18 @@
       rustfmt
       clippy
       rust-analyzer
+      rustPlatform.rustLibSrc
+      sccache
     ];
+    RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
+    # rust-vscode tooling prefixes rustc calls with the sccache binary (kept as-is)
+    RUSTC_WRAPPER = "${pkgs.sccache}/bin/sccache";
+    shellHook = ''
+      export SCCACHE_DIR="$HOME/.cache/sccache";
+      mkdir -p "$SCCACHE_DIR";
+      if [ -z "$FISH_DEV_SHELL" ] && command -v fish >/dev/null 2>&1; then
+        exec fish
+      fi
+    '';
   };
 }

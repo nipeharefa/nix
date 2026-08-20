@@ -194,7 +194,7 @@
             if test -z "$picked"
               return 1
             end
-            nix develop ~/.config/nixpkgs#"$picked"
+            env FISH_DEV_SHELL=1 nix develop ~/.config/nixpkgs#"$picked"
             return $status
           end
           set -l shell_name $argv[1]
@@ -209,7 +209,7 @@
             echo "Repository not found: $repo" >&2
             return 1
           end
-          nix develop "$repo#$shell_name"
+          env FISH_DEV_SHELL=1 nix develop "$repo#$shell_name"
         '';
       };
       treset = {
