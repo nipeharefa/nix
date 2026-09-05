@@ -47,7 +47,7 @@ let
 
     hugo
 
-    go_1_26 gopls
+    go_1_27 gopls
     golangci-lint go-mockery
 
     nixpkgs-fmt
