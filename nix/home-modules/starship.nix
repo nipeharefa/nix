@@ -16,7 +16,10 @@
         discharging_symbol = "💀 ";
       };
       kubernetes = {
-        disabled = false;
+        disabled = true;
+      };
+      gcloud = {
+        disabled = true;
       };
       # format = "$directory$git_branch$git_status$kubernetes\n$character";
       palette = "catppuccin_mocha";

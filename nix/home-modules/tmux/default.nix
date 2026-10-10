@@ -118,8 +118,8 @@
       
       # ===== SMART FEATURES =====
       # Auto rename windows based on current program
-      set -g automatic-rename on
-      set -g automatic-rename-format '#{b:pane_current_path}'
+      # set -g automatic-rename on
+      # set -g automatic-rename-format '#{b:pane_current_path}'
       
       # Activity monitoring
       set -g monitor-activity on
