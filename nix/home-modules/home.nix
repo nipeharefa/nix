@@ -13,11 +13,27 @@ let
   ai = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     claude-code
     opencode
+    opencode2
     rtk
+    qmd
   ];
+
+  redisCli = pkgs.runCommandLocal "redis-cli-only" { } ''
+    mkdir -p $out/bin
+    ln -s ${pkgs.valkey}/bin/redis-cli $out/bin/redis-cli
+  '';
+
+  pgCli = pkgs.runCommandLocal "pg-cli-only" { } ''
+    mkdir -p $out/bin
+    ln -s ${pkgs.postgresql_18}/bin/psql $out/bin/psql
+  '';
 
   defaultPackages = with pkgs; [
     (mkSopsCmd "get_home_password" "home-password.yaml")
+
+    pgCli
+
+    bats
 
     nodejs_24
     yarn
@@ -32,7 +48,7 @@ let
     yq-go
     jq
 
-    redis
+    redisCli
 
     fzy
     fastfetch
